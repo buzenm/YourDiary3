@@ -99,10 +99,10 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="VIews\DiaryContentPage.xaml.cs">
+    <Compile Include="Views\DiaryContentPage.xaml.cs">
       <DependentUpon>DiaryContentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="VIews\DiarysListViewPage.xaml.cs">
+    <Compile Include="Views\DiarysListViewPage.xaml.cs">
       <DependentUpon>DiarysListViewPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -131,11 +131,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="VIews\DiaryContentPage.xaml">
+    <Page Include="Views\DiaryContentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="VIews\DiarysListViewPage.xaml">
+    <Page Include="Views\DiarysListViewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

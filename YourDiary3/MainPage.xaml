@@ -8,12 +8,40 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Opacity="1">
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Frame Name="LeftFrame" Opacity="1"></Frame>
-        <Frame Grid.Column="1" Name="RightFrame" Opacity="1"></Frame>
+        <Frame Name="LeftFrame" Canvas.ZIndex="1"></Frame>
+        <Frame Grid.Column="1" Name="RightFrame" 
+               Canvas.ZIndex="0" 
+               ></Frame>
+
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="Phone">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="LeftFrame.(Grid.ColumnSpan)" Value="2"/>
+                        <Setter Target="RightFrame.(Grid.ColumnSpan)" Value="2"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="PC">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="{x:Bind DeviceWidth}"/>
+                        <AdaptiveTrigger  ></AdaptiveTrigger>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="LeftFrame.Width" Value="400"/>
+                    </VisualState.Setters>
+                </VisualState>
+
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
     </Grid>
+    
 </Page>

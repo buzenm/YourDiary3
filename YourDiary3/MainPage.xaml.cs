@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using Windows.Devices.Input;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Graphics.Display;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -22,10 +24,28 @@ namespace YourDiary3
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public int DeviceWidth = 0;
         public MainPage()
         {
             this.InitializeComponent();
             LeftFrame.Navigate(typeof(VIews.DiarysListViewPage));
+            RightFrame.Navigate(typeof(VIews.DiaryContentPage1));
+            Size size = GetDeviceResolution();
+            DeviceWidth = (int)size.Width/2;
+        }
+
+
+        public static Size GetDeviceResolution()
+        {
+            Size resolution = Size.Empty;
+            var rawPixelsPerViewPixel = DisplayInformation.GetForCurrentView().RawPixelsPerViewPixel;
+            foreach (var item in PointerDevice.GetPointerDevices())
+            {
+                resolution.Width = item.ScreenRect.Width * rawPixelsPerViewPixel;
+                resolution.Height = item.ScreenRect.Height * rawPixelsPerViewPixel;
+                break;
+            }
+            return resolution;
         }
     }
 }
