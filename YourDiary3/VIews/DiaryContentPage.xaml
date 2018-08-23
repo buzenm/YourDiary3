@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -17,8 +17,12 @@
         </Grid.RowDefinitions>
 
         <TextBlock></TextBlock>
-        <TextBox Grid.Row="1"></TextBox>
-        <ComboBox Grid.Row="2"></ComboBox>
-        <CommandBar Grid.Row="3"></CommandBar>
+        <TextBox Grid.Row="1" Margin="25,10,25,10"></TextBox>
+        <ComboBox Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,15,0"></ComboBox>
+        <CommandBar Grid.Row="3" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+            <AppBarButton></AppBarButton>
+            <AppBarButton></AppBarButton>
+            <AppBarButton></AppBarButton>
+        </CommandBar>
     </Grid>
 </Page>

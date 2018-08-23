@@ -31,6 +31,7 @@
                         <Setter Target="RightFrame.(Grid.ColumnSpan)" Value="2"/>
                     </VisualState.Setters>
                 </VisualState>
+                
                 <VisualState x:Name="PC">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="{x:Bind DeviceWidth}"/>
