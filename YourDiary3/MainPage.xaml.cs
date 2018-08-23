@@ -15,9 +15,8 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Threading;
-using System.Drawing;
 using Size = Windows.Foundation.Size;
-using System.Management;
+
 
 
 // https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x804 上介绍了“空白页”项模板
@@ -39,7 +38,10 @@ namespace YourDiary3
             DeviceWidth = (int)size.Width/2;
         }
 
-
+        /// <summary>
+        /// 获取设备屏幕长宽
+        /// </summary>
+        /// <returns></returns>
         public static Size GetDeviceResolution()
         {
             //using (Graphics graphics = Graphics.FromHwnd(IntPtr.Zero))
