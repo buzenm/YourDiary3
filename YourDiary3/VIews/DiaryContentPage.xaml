@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+    <Grid Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}">
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -16,13 +16,35 @@
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBlock></TextBlock>
-        <TextBox Grid.Row="1" Margin="25,10,25,10"></TextBox>
-        <ComboBox Grid.Row="2" HorizontalAlignment="Right" Margin="0,0,15,0"></ComboBox>
-        <CommandBar Grid.Row="3" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
-            <AppBarButton></AppBarButton>
-            <AppBarButton></AppBarButton>
-            <AppBarButton></AppBarButton>
+        <TextBlock FontSize="26" 
+                   Name="TitleTextBlock" 
+                   Margin="20,10,25,0">2012-12-12</TextBlock>
+        <TextBox Grid.Row="1" 
+                 Name="ContentTextBox"
+                 Margin="20,10,25,10" 
+                 TextWrapping="Wrap"
+                 FontSize="24" 
+                 PlaceholderText="学而不思则罔，思而不学则殆，不思不学则网贷"></TextBox>
+        <ComboBox Grid.Row="2" 
+                  HorizontalAlignment="Right" 
+                  Margin="0,0,25,20" 
+                  Height="35" 
+                  PlaceholderText="天气" 
+                  FontSize="18" 
+                  Name="WeatherComboBox" 
+                  SelectionChanged="WeatherComboBox_SelectionChanged">
+            <ComboBoxItem Content="晴">
+                
+            </ComboBoxItem>
+            <ComboBoxItem Content="多云"></ComboBoxItem>
+            <ComboBoxItem Content="阴"></ComboBoxItem>
+            <ComboBoxItem Content="雨"></ComboBoxItem>
+        </ComboBox>
+        <CommandBar Grid.Row="3" 
+                    Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}">
+            <AppBarButton Icon="Back" Label="上一篇"></AppBarButton>
+            <AppBarButton Icon="Forward" Label="下一篇"></AppBarButton>
+            <AppBarButton Icon="Save" Label="保存"></AppBarButton>
         </CommandBar>
     </Grid>
 </Page>

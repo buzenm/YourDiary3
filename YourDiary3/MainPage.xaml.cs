@@ -29,13 +29,16 @@ namespace YourDiary3
     public sealed partial class MainPage : Page
     {
         public int DeviceWidth = 0;
+        //public int LeftFrameWidth = 0;
         public MainPage()
         {
+            Size size = GetDeviceResolution();
+            DeviceWidth = (int)size.Width / 2;
+            //LeftFrameWidth = (int)size.Width / 4;
             this.InitializeComponent();
             LeftFrame.Navigate(typeof(VIews.DiarysListViewPage));
             RightFrame.Navigate(typeof(VIews.DiaryContentPage1));
-            Size size = GetDeviceResolution();
-            DeviceWidth = (int)size.Width/2;
+            
         }
 
         /// <summary>

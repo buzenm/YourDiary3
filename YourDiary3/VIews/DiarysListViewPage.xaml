@@ -5,27 +5,40 @@
     xmlns:local="using:YourDiary3.VIews"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:local1="using:YourDiary3.Models"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
-        <ResourceDictionary>
+        <Style x:Key="RemindTextBlock" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="18"/>
+        </Style>
+        <!--<ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Dictionary1.xaml"/>
             </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
+        </ResourceDictionary>-->
     </Page.Resources>
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Pivot Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+        <Pivot Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}">
             <PivotItem Header="备忘录" Margin="10,0,0,0">
-                <ListView Name="BeiWangLuListView">
+                <ListView Name="BeiWangLuListView" ItemsSource="reminds">
                     <ListView.ItemTemplate>
-                        <DataTemplate>
-                            
+                        <DataTemplate x:DataType="local1:Remind">
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Name="DateTextBlock" 
+                                           FontSize="18" 
+                                           Margin="0,5,0,5" 
+                                           Text="{x:Bind Date}"></TextBlock>
+                                <TextBlock Name="ContentTextBlock" 
+                                           FontSize="22" 
+                                           Margin="0,5,0,5" 
+                                           Text="{x:Bind Content}"></TextBlock>
+                            </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -34,14 +47,24 @@
                 <ListView Name="DiaryListView">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            
+                            <StackPanel Orientation="Vertical">
+                                <TextBlock Name="DateTextBlock1" 
+                                           FontSize="18" 
+                                           Margin="0,5,0,5"></TextBlock>
+                                <TextBlock Name="WeatherTextBlock1" 
+                                           FontSize="20" 
+                                           Margin="0,5,0,5"></TextBlock>
+                                <TextBlock Name="ContentTextBlock1" 
+                                           FontSize="22" 
+                                           Margin="0,5,0,5"></TextBlock>
+                            </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </PivotItem>
         </Pivot>
 
-        <CommandBar VerticalAlignment="Bottom" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+        <CommandBar VerticalAlignment="Bottom" Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}">
             <AppBarButton Icon="Add" Label="添加" ></AppBarButton>
             <AppBarButton Icon="Sync" Label="同步"></AppBarButton>
             <CommandBar.SecondaryCommands>

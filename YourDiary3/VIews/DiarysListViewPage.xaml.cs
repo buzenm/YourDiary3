@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -12,6 +13,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using YourDiary3.Models;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -22,9 +24,19 @@ namespace YourDiary3.VIews
     /// </summary>
     public sealed partial class DiarysListViewPage : Page
     {
+
+        public ObservableCollection<Remind> reminds = new ObservableCollection<Remind>();
+        public ObservableCollection<Diary> diaries = new ObservableCollection<Diary>();
         public DiarysListViewPage()
         {
             this.InitializeComponent();
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            Remind remind = new Remind() { Date = DateTime.Now, Content = "闲鱼不要买批发的" };
+            reminds.Add(remind);
         }
     }
 }
