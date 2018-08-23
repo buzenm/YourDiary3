@@ -8,13 +8,20 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid Background="{ThemeResource SystemControlBackgroundAltMediumLowBrush}">
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Dictionary1.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Pivot>
-            <PivotItem Header="备忘录">
+        <Pivot Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+            <PivotItem Header="备忘录" Margin="10,0,0,0">
                 <ListView Name="BeiWangLuListView">
                     <ListView.ItemTemplate>
                         <DataTemplate>
@@ -34,12 +41,13 @@
             </PivotItem>
         </Pivot>
 
-        <CommandBar VerticalAlignment="Bottom">
-            <AppBarButton Icon="Add"></AppBarButton>
-            <AppBarButton Icon="Sync"></AppBarButton>
+        <CommandBar VerticalAlignment="Bottom" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+            <AppBarButton Icon="Add" Label="添加" ></AppBarButton>
+            <AppBarButton Icon="Sync" Label="同步"></AppBarButton>
             <CommandBar.SecondaryCommands>
-                <AppBarButton></AppBarButton>
-                <AppBarButton></AppBarButton>
+                <AppBarButton  Label="登录" ></AppBarButton>
+                <AppBarButton Label="注销" ></AppBarButton>
+                <AppBarButton  Label="设置" ></AppBarButton>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Grid>

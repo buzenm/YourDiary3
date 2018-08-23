@@ -7,15 +7,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-
-    <Grid>
+    
+    <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Frame Name="LeftFrame" Canvas.ZIndex="1"></Frame>
+        <Frame Name="LeftFrame" Canvas.ZIndex="1" Margin="0,32,0,0"></Frame>
         <Frame Grid.Column="1" Name="RightFrame" 
                Canvas.ZIndex="0" 
+               Margin="0,32,0,0"
                ></Frame>
 
 
