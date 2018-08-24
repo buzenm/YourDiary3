@@ -16,6 +16,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using System.Threading;
 using Size = Windows.Foundation.Size;
+using YourDiary3.Views;
 
 
 
@@ -28,6 +29,7 @@ namespace YourDiary3
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        public static MainPage current;
         public int DeviceWidth = 0;
         //public int LeftFrameWidth = 0;
         public MainPage()
@@ -36,9 +38,9 @@ namespace YourDiary3
             DeviceWidth = (int)size.Width / 2;
             //LeftFrameWidth = (int)size.Width / 4;
             this.InitializeComponent();
-            LeftFrame.Navigate(typeof(VIews.DiarysListViewPage));
-            RightFrame.Navigate(typeof(VIews.DiaryContentPage1));
-            
+            LeftFrame.Navigate(typeof(ListViewPage));
+            //RightFrame.Navigate(typeof(DiaryContentPage));
+            current = this;
         }
 
         /// <summary>

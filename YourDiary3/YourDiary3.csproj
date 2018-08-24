@@ -106,8 +106,11 @@
     <Compile Include="Views\DiaryContentPage.xaml.cs">
       <DependentUpon>DiaryContentPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DiarysListViewPage.xaml.cs">
-      <DependentUpon>DiarysListViewPage.xaml</DependentUpon>
+    <Compile Include="Views\ListViewPage.xaml.cs">
+      <DependentUpon>ListViewPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\RemindContentPage.xaml.cs">
+      <DependentUpon>RemindContentPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -138,11 +141,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\DiarysListViewPage.xaml">
+    <Page Include="Views\ListViewPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\ListviewItemStyle.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\RemindContentPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

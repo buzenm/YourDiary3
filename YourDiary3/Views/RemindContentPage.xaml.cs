@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -13,30 +12,23 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
-using YourDiary3.Models;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
-namespace YourDiary3.VIews
+namespace YourDiary3.Views
 {
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class DiarysListViewPage : Page
+    public sealed partial class RemindContentPage : Page
     {
+        public static RemindContentPage current;
 
-        public ObservableCollection<Remind> reminds = new ObservableCollection<Remind>();
-        public ObservableCollection<Diary> diaries = new ObservableCollection<Diary>();
-        public DiarysListViewPage()
+        public RemindContentPage()
         {
             this.InitializeComponent();
-        }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            Remind remind = new Remind() { Date = DateTime.Now, Content = "闲鱼不要买批发的" };
-            reminds.Add(remind);
+            current = this;
         }
     }
 }
