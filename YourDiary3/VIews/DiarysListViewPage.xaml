@@ -18,7 +18,71 @@
                 <ResourceDictionary Source="Dictionary1.xaml"/>
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>-->
+        <ResourceDictionary x:Key="ListviewStyleDictionary">
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ListviewItemStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+        <!--<Style x:Name="MyListViewItemSelectedStyle" TargetType="ListViewItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+                            <ContentPresenter
+                                Content="{TemplateBinding Content}"
+                                Margin="{TemplateBinding Padding}" />
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
+        <!--<Style x:Name="MyListViewItemSelectedStyle" TargetType="ListViewItem">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <Grid Background="{TemplateBinding Background}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup>
+                                    
+        
+                                    <VisualState x:Name="Normal" />
+                                    
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames 
+                        Storyboard.TargetName="ContentBackground"
+                        Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Red" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <Grid x:Name="ContentBackground">
+                                <ContentPresenter
+                  Content="{TemplateBinding Content}"
+                  Margin="{TemplateBinding Padding}" />
+                            </Grid>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>-->
+
+        <Style x:Key="MyListViewItemSelectedStyle" TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemRevealStyle}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem" >
+                        <ListViewItemPresenter 
+                            
+                        />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Page.Resources>
+    
+    
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
@@ -26,10 +90,14 @@
         </Grid.RowDefinitions>
         <Pivot Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}">
             <PivotItem Header="备忘录" Margin="10,0,0,0">
-                <ListView Name="BeiWangLuListView" ItemsSource="{x:Bind reminds}">
-                    <ListView.ItemTemplate>
+                <ListView Name="BeiWangLuListView" ItemsSource="{x:Bind reminds}" >
+                    
+                    <ListView.ItemTemplate >
+
                         <DataTemplate x:DataType="local1:Remind">
-                            <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Vertical" 
+                                        
+                                        >
                                 <TextBlock Name="DateTextBlock" 
                                            FontSize="18" 
                                            Margin="0,5,0,5" 
@@ -38,25 +106,28 @@
                                            FontSize="22" 
                                            TextWrapping="Wrap"
                                            Margin="0,5,0,5" 
-                                           Text="{x:Bind Content}"></TextBlock>
+                                           Text="{x:Bind Content,Mode=TwoWay}"></TextBlock>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
             </PivotItem>
             <PivotItem Header="日记">
-                <ListView Name="DiaryListView">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
+                <ListView Name="DiaryListView" ItemsSource="{x:Bind diaries}">
+                    <ListView.ItemTemplate >
+                        <DataTemplate x:DataType="local1:Diary">
                             <StackPanel Orientation="Vertical">
                                 <TextBlock Name="DateTextBlock1" 
                                            FontSize="18" 
+                                           Text="{x:Bind Date}"
                                            Margin="0,5,0,5"></TextBlock>
                                 <TextBlock Name="WeatherTextBlock1" 
                                            FontSize="20" 
+                                           Text="{x:Bind Weather}"
                                            Margin="0,5,0,5"></TextBlock>
                                 <TextBlock Name="ContentTextBlock1" 
                                            FontSize="22" 
+                                           Text="{x:Bind Content,Mode=TwoWay}" 
                                            Margin="0,5,0,5"></TextBlock>
                             </StackPanel>
                         </DataTemplate>

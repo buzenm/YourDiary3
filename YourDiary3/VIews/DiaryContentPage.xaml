@@ -22,7 +22,8 @@
         <TextBox Grid.Row="1" 
                  Name="ContentTextBox"
                  Margin="20,10,25,10" 
-                 TextWrapping="Wrap"
+                 TextWrapping="Wrap" 
+                 
                  FontSize="24" 
                  PlaceholderText="学而不思则罔，思而不学则殆，不思不学则网贷"></TextBox>
         <ComboBox Grid.Row="2" 
