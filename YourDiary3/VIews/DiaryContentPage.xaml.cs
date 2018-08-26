@@ -38,6 +38,13 @@ namespace YourDiary3.Views
 
         }
 
-        
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (e.Parameter.GetType() == typeof(int))
+            {
+                TitleTextBlock.Text = DateTime.Now.ToShortDateString();
+            }
+        }
     }
 }

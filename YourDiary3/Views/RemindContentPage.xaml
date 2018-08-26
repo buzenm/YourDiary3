@@ -16,10 +16,11 @@
         </Grid.RowDefinitions>
 
         <TextBlock Name="TitleTextblock" FontSize="26" Margin="20,7,0,0">2018-8-8</TextBlock>
-        <RichEditBox Grid.Row="1" Name="ContentRichEditBox" AcceptsReturn="True" TextWrapping="Wrap"
+        <TextBox Grid.Row="1" Name="ContentTextBox" AcceptsReturn="True" TextWrapping="Wrap"
                      Margin="20,20,20,20" 
                      FontSize="26" 
-                     x:FieldModifier="Public"></RichEditBox>
+                     
+                     x:FieldModifier="Public"></TextBox>
         <CommandBar Grid.Row="2" 
                     Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}">
             <AppBarButton Icon="Back" Label="上一篇"></AppBarButton>

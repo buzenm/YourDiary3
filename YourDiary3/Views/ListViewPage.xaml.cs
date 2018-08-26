@@ -48,13 +48,19 @@ namespace YourDiary3.Views
                 {
                     if (MainPage.current.RightFrame.SourcePageType.Name != "RemindContentPage")
                     {
-                        MainPage.current.RightFrame.Navigate(typeof(RemindContentPage));
-                        if()
+                        MainPage.current.RightFrame.Navigate(typeof(RemindContentPage),1);
+                    }
+                    else
+                    {
+                        if (RemindContentPage.current.ContentTextBox.Text == string.Empty)
+                        {
+                            MainPage.current.RightFrame.Navigate(typeof(RemindContentPage),1);
+                        }
                     }
                 }
                 catch
                 {
-                    MainPage.current.RightFrame.Navigate(typeof(RemindContentPage));
+                    MainPage.current.RightFrame.Navigate(typeof(RemindContentPage),1);
                 }
                 //AddItem(DateTime.Now)
                 
@@ -66,12 +72,13 @@ namespace YourDiary3.Views
                 {
                     if (MainPage.current.RightFrame.SourcePageType.Name != "DiaryContentPage")
                     {
-                        MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage));
+                        MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage),1);
                     }
+                    
                 }
                 catch
                 {
-                    MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage));
+                    MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage),1);
                 }
             }
                 
