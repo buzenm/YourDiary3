@@ -17,6 +17,7 @@ using Windows.UI.Xaml.Navigation;
 using System.Threading;
 using Size = Windows.Foundation.Size;
 using YourDiary3.Views;
+using YourDiary3.Models;
 
 
 
@@ -41,6 +42,7 @@ namespace YourDiary3
             LeftFrame.Navigate(typeof(ListViewPage));
             //RightFrame.Navigate(typeof(DiaryContentPage));
             current = this;
+            
         }
 
         /// <summary>
@@ -85,6 +87,17 @@ namespace YourDiary3
                 break;
             }
             return resolution;
+        }
+
+        protected async override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            
+        }
+
+        private async void Page_Loading(FrameworkElement sender, object args)
+        {
+            await Functions.SaveToDatabase();
         }
     }
 }

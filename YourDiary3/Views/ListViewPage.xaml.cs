@@ -25,12 +25,13 @@ namespace YourDiary3.Views
     /// </summary>
     public sealed partial class ListViewPage : Page
     {
-        
+        public static ListViewPage current;
         public ObservableCollection<Remind> reminds = new ObservableCollection<Remind>();
         public ObservableCollection<Diary> diaries = new ObservableCollection<Diary>();
         public ListViewPage()
         {
             this.InitializeComponent();
+            current = this;
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

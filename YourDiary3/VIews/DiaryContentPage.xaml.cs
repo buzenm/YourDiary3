@@ -43,8 +43,22 @@ namespace YourDiary3.Views
             base.OnNavigatedTo(e);
             if (e.Parameter.GetType() == typeof(int))
             {
-                TitleTextBlock.Text = DateTime.Now.ToShortDateString();
+                TitleTextBlock.Text = DateTime.Now.ToString("yyyyMMdd");
             }
+        }
+
+        private void SaveAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+            SavetoCollection();
+        }
+
+        public void SavetoCollection()
+        {
+            Diary diary = new Diary();
+            diary.Date = DateTime.ParseExact(TitleTextBlock.Text, "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
+            diary.Content = ContentTextBox.Text;
+            diary.Weather = WeatherComboBox.SelectionBoxItem.ToString();
+            ListViewPage.current.diaries.Add(diary);
         }
     }
 }

@@ -46,7 +46,7 @@
                     Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}">
             <AppBarButton Icon="Back" Label="上一篇"></AppBarButton>
             <AppBarButton Icon="Forward" Label="下一篇"></AppBarButton>
-            <AppBarButton Icon="Save" Label="保存"></AppBarButton>
+            <AppBarButton Icon="Save" Label="保存" Name="SaveAppBarButton" Click="SaveAppBarButton_Click"></AppBarButton>
         </CommandBar>
     </Grid>
 </Page>
