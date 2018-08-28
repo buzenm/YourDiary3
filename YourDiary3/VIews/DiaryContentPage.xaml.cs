@@ -24,6 +24,9 @@ namespace YourDiary3.Views
     /// </summary>
     public sealed partial class DiaryContentPage : Page
     {
+        private static readonly string DBName = "YourDiary.db3";
+        private static readonly string DiaryTableName = "CSY_DIARY";
+        private static readonly string RemindTableName = "CSY_REMIND";
         public static DiaryContentPage current;
         
         public DiaryContentPage()
@@ -60,7 +63,8 @@ namespace YourDiary3.Views
             diary.Weather = WeatherComboBox.SelectionBoxItem.ToString();
             ListViewPage.current.diaries.Add(diary);
 
-            SqliteDatabase.InsertData(diary, "YourDiary.db3", "CSY_DIARY");
+            SqliteDatabase.InsertData(diary, DBName, DiaryTableName);
+            
         }
     }
 }

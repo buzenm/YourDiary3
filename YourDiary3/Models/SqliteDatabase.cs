@@ -75,11 +75,12 @@ namespace YourDiary3.Models
                 Diary diary = new Diary();
                 while (query.Read())
                 {
-                    diary.Date = query.GetDateTime(1);
+                    diary.Date = DateTime.ParseExact(query.GetString(1), "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
                     diary.Weather = query.GetString(2);
                     diary.Content = query.GetString(3);
                     diaries.Add(diary);
                 }
+                db.Close();
                 return diaries;
             }
         }

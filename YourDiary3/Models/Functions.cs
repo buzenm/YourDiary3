@@ -14,6 +14,9 @@ namespace YourDiary3.Models
     public class Functions
     {
         private static readonly string DBName = "YourDiary.db3";
+        private static readonly string DiaryTableName = "CSY_DIARY";
+        private static readonly string RemindTableName = "CSY_REMIND";
+
         public async static Task LoadFromDatabase()
         {
             StorageFolder folder = ApplicationData.Current.LocalFolder;
@@ -40,7 +43,7 @@ namespace YourDiary3.Models
             StorageFolder folder = ApplicationData.Current.LocalFolder;
             StorageFile file = await folder.CreateFileAsync(DBName, CreationCollisionOption.OpenIfExists);
             //SQLiteConnection.CreateFile(folder+"YourDiary.db3");
-            SqliteDatabase.InsertTable(DBName, "CSY_DIARY");
+            SqliteDatabase.InsertTable(DBName, DiaryTableName);
 
         }
 

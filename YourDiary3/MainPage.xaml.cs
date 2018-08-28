@@ -25,12 +25,14 @@ using YourDiary3.Models;
 
 namespace YourDiary3
 {
+
+    
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        //public const string DBName = "YourDiary.db3";
+        public static readonly string DBName = "YourDiary.db3";
         public static MainPage current;
         public int DeviceWidth = 0;
         //public int LeftFrameWidth = 0;

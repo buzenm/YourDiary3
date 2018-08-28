@@ -25,6 +25,8 @@ namespace YourDiary3.Views
     /// </summary>
     public sealed partial class ListViewPage : Page
     {
+        private static readonly string DBName = "YourDiary.db3";
+        private static readonly string DiaryTableName = "CSY_DIARY";
         public static ListViewPage current;
         public ObservableCollection<Remind> reminds = new ObservableCollection<Remind>();
         public ObservableCollection<Diary> diaries = new ObservableCollection<Diary>();
@@ -39,7 +41,7 @@ namespace YourDiary3.Views
             base.OnNavigatedTo(e);
             Remind remind = new Remind() { Date = DateTime.Now, Content = "闲鱼不要买批发的" };
             reminds.Add(remind);
-            diaries = SqliteDatabase.LoadFromDatabase("YourDiary.db3", "CSY_DIARY");
+            diaries = SqliteDatabase.LoadFromDatabase(DBName, DiaryTableName);
         }
 
         private void AddAppBarButton_Click(object sender, RoutedEventArgs e)
