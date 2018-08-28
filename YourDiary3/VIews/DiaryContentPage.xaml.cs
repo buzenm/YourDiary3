@@ -46,7 +46,7 @@ namespace YourDiary3.Views
             base.OnNavigatedTo(e);
             if (e.Parameter.GetType() == typeof(int))
             {
-                TitleTextBlock.Text = DateTime.Now.ToString("yyyyMMdd");
+                TitleTextBlock.Text = DateTime.Now.ToShortDateString();
             }
         }
 

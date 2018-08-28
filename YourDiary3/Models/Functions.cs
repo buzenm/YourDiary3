@@ -31,7 +31,7 @@ namespace YourDiary3.Models
                     }
                 }
             }
-            
+
         }
 
         public async static Task SaveToDatabase()
@@ -47,6 +47,10 @@ namespace YourDiary3.Models
 
         }
 
+        public interface IRightOnLeft
+        {
+            
+        }
 
 
     }
