@@ -58,7 +58,7 @@ namespace YourDiary3.Views
         public void SavetoCollection()
         {
             Diary diary = new Diary();
-            diary.Date = DateTime.ParseExact(TitleTextBlock.Text, "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
+            diary.Date = TitleTextBlock.Text;
             diary.Content = ContentTextBox.Text;
             diary.Weather = WeatherComboBox.SelectionBoxItem.ToString();
             ListViewPage.current.diaries.Add(diary);

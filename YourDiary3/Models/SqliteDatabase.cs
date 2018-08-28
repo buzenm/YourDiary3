@@ -55,7 +55,7 @@ namespace YourDiary3.Models
                 insertCommand.Connection = db;
                 //diary.Date = DateTime.ParseExact(diary.Date.ToString(), "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
                 insertCommand.CommandText = "INSERT INTO " + TableName +
-                    " VALUES (NULL," + diary.Date.ToString("yyyyMMdd") + ",'" + diary.Weather + "','" +
+                    " VALUES (NULL," + diary.Date + ",'" + diary.Weather + "','" +
                     diary.Content + "')";
                 insertCommand.ExecuteReader();
                 db.Close();
@@ -75,8 +75,8 @@ namespace YourDiary3.Models
                 Diary diary = new Diary();
                 while (query.Read())
                 {
-                    
-                    diary.Date = DateTime.ParseExact(query.GetString(0), "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
+
+                    diary.Date = query.GetString(0);
                     diary.Weather = query.GetString(1);
                     diary.Content = query.GetString(2);
                     diaries.Add(diary);

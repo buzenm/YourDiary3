@@ -92,11 +92,7 @@ namespace YourDiary3
             return resolution;
         }
 
-        protected async override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-            
-        }
+        
 
         private async void Page_Loading(FrameworkElement sender, object args)
         {

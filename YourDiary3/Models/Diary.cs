@@ -8,7 +8,7 @@ namespace YourDiary3.Models
 {
     public class Diary
     {
-        public DateTime Date { get; set; }
+        public string Date { get; set; }
 
         public string Content { get; set; }
 

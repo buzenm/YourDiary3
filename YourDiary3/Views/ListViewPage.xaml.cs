@@ -39,7 +39,7 @@ namespace YourDiary3.Views
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
             base.OnNavigatedTo(e);
-            Remind remind = new Remind() { Date = DateTime.Now, Content = "闲鱼不要买批发的" };
+            Remind remind = new Remind() { Date = DateTime.Now.ToShortDateString(), Content = "闲鱼不要买批发的" };
             reminds.Add(remind);
             diaries = SqliteDatabase.LoadFromDatabase(DBName, DiaryTableName);
         }
@@ -89,12 +89,12 @@ namespace YourDiary3.Views
 
         }
 
-        public void AddItem(DateTime date,string weather,string content)
+        public void AddItem(string date,string weather,string content)
         {
             Diary diary = new Diary() { Date = date, Weather = weather, Content = content };
             diaries.Add(diary);
         }
-        public void AddItem(DateTime date,string content)
+        public void AddItem(string date,string content)
         {
             Remind remind = new Remind() { Date = date, Content = content };
             reminds.Add(remind);
