@@ -30,6 +30,7 @@ namespace YourDiary3
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        //public const string DBName = "YourDiary.db3";
         public static MainPage current;
         public int DeviceWidth = 0;
         //public int LeftFrameWidth = 0;

@@ -39,6 +39,7 @@ namespace YourDiary3.Views
             base.OnNavigatedTo(e);
             Remind remind = new Remind() { Date = DateTime.Now, Content = "闲鱼不要买批发的" };
             reminds.Add(remind);
+            diaries = SqliteDatabase.LoadFromDatabase("YourDiary.db3", "CSY_DIARY");
         }
 
         private void AddAppBarButton_Click(object sender, RoutedEventArgs e)

@@ -59,6 +59,8 @@ namespace YourDiary3.Views
             diary.Content = ContentTextBox.Text;
             diary.Weather = WeatherComboBox.SelectionBoxItem.ToString();
             ListViewPage.current.diaries.Add(diary);
+
+            SqliteDatabase.InsertData(diary, "YourDiary.db3", "CSY_DIARY");
         }
     }
 }
