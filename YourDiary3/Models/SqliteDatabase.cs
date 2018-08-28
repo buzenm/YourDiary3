@@ -68,21 +68,23 @@ namespace YourDiary3.Models
             using (SqliteConnection db=new SqliteConnection("Filename=" + DBName))
             {
                 db.Open();
-                SqliteCommand selectCommand = new SqliteCommand();
-                selectCommand.Connection = db;
-                selectCommand.CommandText = "SELECT CSY_DATE,CSY_WEATHER,CSY_CONTENT FROM " + TableName;
+                SqliteCommand selectCommand = new SqliteCommand("SELECT CSY_DATE,CSY_WEATHER,CSY_CONTENT FROM " + TableName,db);
+                
+                
                 SqliteDataReader query = selectCommand.ExecuteReader();
                 Diary diary = new Diary();
                 while (query.Read())
                 {
-                    diary.Date = DateTime.ParseExact(query.GetString(1), "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
-                    diary.Weather = query.GetString(2);
-                    diary.Content = query.GetString(3);
+                    
+                    diary.Date = DateTime.ParseExact(query.GetString(0), "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
+                    diary.Weather = query.GetString(1);
+                    diary.Content = query.GetString(2);
                     diaries.Add(diary);
                 }
                 db.Close();
-                return diaries;
+                
             }
+            return diaries;
         }
     }
 }
