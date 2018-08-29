@@ -88,7 +88,7 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Pivot Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" Name="MyPivot">
+        <Pivot Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" Name="MyPivot" Margin="0,0,0,48">
             <PivotItem Header="备忘录" Margin="0,0,0,0" Name="BeiWangLuPivotItem">
                 <ListView Name="BeiWangLuListView" ItemsSource="{x:Bind reminds}" >
                     

@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Windows.Storage;
 
 namespace YourDiary3.Models
 {
@@ -37,7 +39,7 @@ namespace YourDiary3.Models
                 foreach (var item in diaries)
                 {
                     insertCommand.CommandText = "INSERT INTO " + TableName +
-                    " VALUES (NULL," + item.Date + ",'" + item.Weather + "','" +
+                    " VALUES (NULL,'" + item.Date + "','" + item.Weather + "','" +
                     item.Content + "')";
                     insertCommand.ExecuteReader();
                 }
@@ -55,7 +57,7 @@ namespace YourDiary3.Models
                 insertCommand.Connection = db;
                 //diary.Date = DateTime.ParseExact(diary.Date.ToString(), "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
                 insertCommand.CommandText = "INSERT INTO " + TableName +
-                    " VALUES (NULL," + diary.Date + ",'" + diary.Weather + "','" +
+                    " VALUES (NULL,'" + diary.Date + "','" + diary.Weather + "','" +
                     diary.Content + "')";
                 insertCommand.ExecuteReader();
                 db.Close();
@@ -65,26 +67,29 @@ namespace YourDiary3.Models
         public static ObservableCollection<Diary> LoadFromDatabase(string DBName,string TableName)
         {
             ObservableCollection<Diary> diaries = new ObservableCollection<Diary>();
-            using (SqliteConnection db=new SqliteConnection("Filename=" + DBName))
+            string path = ApplicationData.Current.LocalFolder.Path + "\\" + DBName;
+            if (File.Exists(path))
             {
-                db.Open();
-                SqliteCommand selectCommand = new SqliteCommand("SELECT CSY_DATE,CSY_WEATHER,CSY_CONTENT FROM " + TableName,db);
-                
-                
-                SqliteDataReader query = selectCommand.ExecuteReader();
-                Diary diary = new Diary();
-                while (query.Read())
+                using (SqliteConnection db = new SqliteConnection("Filename=" + DBName))
                 {
+                    db.Open();
+                    SqliteCommand selectCommand = new SqliteCommand("SELECT CSY_DATE,CSY_WEATHER,CSY_CONTENT FROM " + TableName, db);
 
-                    diary.Date = query.GetString(0);
-                    diary.Weather = query.GetString(1);
-                    diary.Content = query.GetString(2);
-                    diaries.Add(diary);
+
+                    SqliteDataReader query = selectCommand.ExecuteReader();
+                    while (query.Read())
+                    {
+                        Diary diary = new Diary();
+                        diary.Date = query.GetString(0);
+                        diary.Weather = query.GetString(1);
+                        diary.Content = query.GetString(2);
+                        diaries.Add(diary);
+                    }
+                    db.Close();
                 }
-                db.Close();
-                
             }
             return diaries;
+            
         }
     }
 }
