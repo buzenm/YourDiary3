@@ -50,19 +50,19 @@ namespace YourDiary3.Views
                 {
                     if (MainPage.current.RightFrame.SourcePageType.Name != "RemindContentPage")
                     {
-                        MainPage.current.RightFrame.Navigate(typeof(RemindContentPage),1);
+                        MainPage.current.RightFrame.Navigate(typeof(RemindContentPage),"1");
                     }
                     else
                     {
                         if (RemindContentPage.current.ContentTextBox.Text == string.Empty)
                         {
-                            MainPage.current.RightFrame.Navigate(typeof(RemindContentPage),1);
+                            MainPage.current.RightFrame.Navigate(typeof(RemindContentPage),"1");
                         }
                     }
                 }
                 catch
                 {
-                    MainPage.current.RightFrame.Navigate(typeof(RemindContentPage),1);
+                    MainPage.current.RightFrame.Navigate(typeof(RemindContentPage),"1");
                 }
                 //AddItem(DateTime.Now)
                 

@@ -30,5 +30,14 @@ namespace YourDiary3.Views
 
             current = this;
         }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            if (e.Parameter.GetType() == typeof(string))
+            {
+                TitleTextblock.Text = DateTime.Now.ToString();
+            }
+        }
     }
 }

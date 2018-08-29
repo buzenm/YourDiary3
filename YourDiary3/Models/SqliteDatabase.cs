@@ -18,6 +18,7 @@ namespace YourDiary3.Models
             {
                 //DateTime.Now.ToShortDateString();
                 conn.Open();
+                
                 string tableCommand = "CREATE TABLE " + "IF NOT EXISTS " + TableName +
                     "(CSY_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "CSY_DATE TEXT," +
