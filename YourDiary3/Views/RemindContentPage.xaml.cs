@@ -12,6 +12,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
+using YourDiary3.Models;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
 
@@ -38,6 +39,16 @@ namespace YourDiary3.Views
             {
                 TitleTextblock.Text = DateTime.Now.ToString();
             }
+        }
+
+        public void SaveToCollection()
+        {
+            Remind remind = new Remind();
+            remind.Date = TitleTextblock.Text;
+            remind.Content = ContentTextBox.Text;
+            ListViewPage.current.reminds.Add(remind);
+
+            
         }
     }
 }
