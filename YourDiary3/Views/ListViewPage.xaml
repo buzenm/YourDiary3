@@ -127,7 +127,8 @@
                                            Margin="0"></TextBlock>
                                 <TextBlock Name="ContentTextBlock1" 
                                            FontSize="24" 
-                                           TextWrapping="Wrap"
+                                           TextWrapping="Wrap" 
+                                           Height="35"
                                            Text="{x:Bind Content,Mode=TwoWay}" 
                                            Margin="0,0,0,5"></TextBlock>
                             </StackPanel>
