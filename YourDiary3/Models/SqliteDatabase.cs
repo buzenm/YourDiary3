@@ -14,28 +14,16 @@ namespace YourDiary3.Models
     {
         public static void InsertTable(string DBName,string TableName)
         {
-            
             using(SqliteConnection conn=new SqliteConnection("Filename=" + DBName))
             {
-                string tableCommand = string.Empty;
                 //DateTime.Now.ToShortDateString();
                 conn.Open();
-                if (TableName == "CSY_DIARY")
-                {
-                    tableCommand = "CREATE TABLE " + "IF NOT EXISTS " + TableName +
+                
+                string tableCommand = "CREATE TABLE " + "IF NOT EXISTS " + TableName +
                     "(CSY_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "CSY_DATE TEXT," +
                     "CSY_WEATHER TEXT," +
                     "CSY_CONTENT TEXT)";
-                }
-                else if (TableName == "CSY_REMIND")
-                {
-                    tableCommand = "CREATE TABLE " + "IF NOT EXISTS " + TableName +
-                    "(CSY_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
-                    "CSY_DATE TEXT," +
-                    "CSY_CONTENT TEXT)";
-                }
-                
                 SqliteCommand createTable = new SqliteCommand(tableCommand, conn);
                 createTable.ExecuteReader();
                 conn.Close();
@@ -77,54 +65,31 @@ namespace YourDiary3.Models
             }
         }
 
-        public static ObservableCollection<T> LoadFromDatabase<T>(string DBName,string TableName)
+        public static ObservableCollection<Diary> LoadFromDatabase(string DBName,string TableName)
         {
-            ObservableCollection<T> diinds = new ObservableCollection<T>();
-            
+            ObservableCollection<Diary> diaries = new ObservableCollection<Diary>();
             string path = ApplicationData.Current.LocalFolder.Path + "\\" + DBName;
             if (File.Exists(path))
             {
-
                 using (SqliteConnection db = new SqliteConnection("Filename=" + DBName))
                 {
                     db.Open();
-                    if (TableName == "CSY_DIARY")
+                    SqliteCommand selectCommand = new SqliteCommand("SELECT CSY_DATE,CSY_WEATHER,CSY_CONTENT FROM " + TableName, db);
+
+
+                    SqliteDataReader query = selectCommand.ExecuteReader();
+                    while (query.Read())
                     {
-                        SqliteCommand selectCommand = new SqliteCommand("SELECT CSY_DATE,CSY_WEATHER,CSY_CONTENT FROM " + TableName, db);
-
-
-                        SqliteDataReader query = selectCommand.ExecuteReader();
-                        while (query.Read())
-                        {
-                            Diary diary = new Diary();
-                            diary.Date = query.GetString(0);
-                            diary.Weather = query.GetString(1);
-                            diary.Content = query.GetString(2);
-                            diinds.Add(diary);
-                        }
-                        return diaries;
+                        Diary diary = new Diary();
+                        diary.Date = query.GetString(0);
+                        diary.Weather = query.GetString(1);
+                        diary.Content = query.GetString(2);
+                        diaries.Add(diary);
                     }
-                    else if (TableName == "CSY_REMIND")
-                    {
-                        SqliteCommand selectCommand = new SqliteCommand("SELECT CSY_DATE,CSY_CONTENT FROM " + TableName, db);
-
-
-                        SqliteDataReader query = selectCommand.ExecuteReader();
-                        while (query.Read())
-                        {
-                            Remind remind = new Remind();
-                            remind.Date = query.GetString(0);
-                            remind.Content = query.GetString(1);
-
-                        }
-                        return diaries;
-                    }
-                }
-                    
                     db.Close();
                 }
             }
-            
+            return diaries;
             
         }
     }
