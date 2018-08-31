@@ -30,6 +30,23 @@ namespace YourDiary3.Models
             }
         }
 
+        public static void InsertTable2(string DBName, string TableName)
+        {
+            using (SqliteConnection conn = new SqliteConnection("Filename=" + DBName))
+            {
+                //DateTime.Now.ToShortDateString();
+                conn.Open();
+
+                string tableCommand = "CREATE TABLE " + "IF NOT EXISTS " + TableName +
+                    "(CSY_ID INTEGER PRIMARY KEY AUTOINCREMENT," +
+                    "CSY_DATE TEXT," +
+                    "CSY_CONTENT TEXT)";
+                SqliteCommand createTable = new SqliteCommand(tableCommand, conn);
+                createTable.ExecuteReader();
+                conn.Close();
+            }
+        }
+
         public static void InsertDataCollection(ObservableCollection<Diary> diaries,string DBName,string TableName)
         {
             using (SqliteConnection db =new SqliteConnection("Filename=" + DBName))
@@ -65,6 +82,22 @@ namespace YourDiary3.Models
             }
         }
 
+        public static void InsertData(Remind remind, string DBName, string TableName)
+        {
+            using (SqliteConnection db = new SqliteConnection("Filename=" + DBName))
+            {
+                db.Open();
+                SqliteCommand insertCommand = new SqliteCommand();
+                insertCommand.Connection = db;
+                //diary.Date = DateTime.ParseExact(diary.Date.ToString(), "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
+                insertCommand.CommandText = "INSERT INTO " + TableName +
+                    " VALUES (NULL,'" + remind.Date + "','"+
+                    remind.Content + "')";
+                insertCommand.ExecuteReader();
+                db.Close();
+            }
+        }
+
         public static ObservableCollection<Diary> LoadFromDatabase(string DBName,string TableName)
         {
             ObservableCollection<Diary> diaries = new ObservableCollection<Diary>();
@@ -92,5 +125,33 @@ namespace YourDiary3.Models
             return diaries;
             
         }
+
+        public static ObservableCollection<Remind> LoadFromDatabase2(string DBName, string TableName)
+        {
+            ObservableCollection<Remind> reminds = new ObservableCollection<Remind>();
+            string path = ApplicationData.Current.LocalFolder.Path + "\\" + DBName;
+            if (File.Exists(path))
+            {
+                using (SqliteConnection db = new SqliteConnection("Filename=" + DBName))
+                {
+                    db.Open();
+                    SqliteCommand selectCommand = new SqliteCommand("SELECT CSY_DATE,CSY_CONTENT FROM " + TableName, db);
+
+
+                    SqliteDataReader query = selectCommand.ExecuteReader();
+                    while (query.Read())
+                    {
+                        Remind remind = new Remind();
+                        remind.Date = query.GetString(0);
+                        remind.Content = query.GetString(1);
+                        reminds.Add(remind);
+                    }
+                    db.Close();
+                }
+            }
+            return reminds;
+
+        }
+
     }
 }

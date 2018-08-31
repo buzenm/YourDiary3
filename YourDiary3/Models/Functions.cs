@@ -44,6 +44,7 @@ namespace YourDiary3.Models
             StorageFile file = await folder.CreateFileAsync(DBName, CreationCollisionOption.OpenIfExists);
             //SQLiteConnection.CreateFile(folder+"YourDiary.db3");
             SqliteDatabase.InsertTable(DBName, DiaryTableName);
+            SqliteDatabase.InsertTable2(DBName, RemindTableName);
 
         }
 
