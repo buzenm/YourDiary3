@@ -88,15 +88,14 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
-        <Pivot Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" Name="MyPivot" Margin="0,0,0,48">
+        <Pivot Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" 
+               Name="MyPivot" Margin="0,0,0,48" SelectionChanged="MyPivot_SelectionChanged">
             <PivotItem Header="备忘录" Margin="0,0,0,0" Name="BeiWangLuPivotItem">
-                <ListView Name="BeiWangLuListView" ItemsSource="{x:Bind reminds}" ItemClick="BeiWangLuListView_ItemClick">
-                    
+                <ListView Name="BeiWangLuListView" ItemsSource="{x:Bind reminds}" 
+                          ItemClick="BeiWangLuListView_ItemClick" IsItemClickEnabled="True">
                     <ListView.ItemTemplate >
-
                         <DataTemplate x:DataType="local1:Remind">
                             <StackPanel Orientation="Vertical" 
-                                        
                                         >
                                 <TextBlock Name="DateTextBlock" 
                                            FontSize="18" 
@@ -113,7 +112,8 @@
                 </ListView>
             </PivotItem>
             <PivotItem Header="日记" Name="DiaryPivotItem">
-                <ListView Name="DiaryListView" ItemsSource="{x:Bind diaries}" IsItemClickEnabled="True" ItemClick="DiaryListView_ItemClick">
+                <ListView Name="DiaryListView" ItemsSource="{x:Bind diaries}" 
+                          IsItemClickEnabled="True" ItemClick="DiaryListView_ItemClick">
                     <ListView.ItemTemplate >
                         <DataTemplate x:DataType="local1:Diary">
                             <StackPanel Orientation="Vertical">
@@ -123,7 +123,7 @@
                                            Margin="0,5,0,2"></TextBlock>
                                 <TextBlock Name="WeatherTextBlock1" 
                                            FontSize="16" 
-                                           Text="{x:Bind Weather}"
+                                           Text="{x:Bind Weather,Mode=TwoWay}"
                                            Margin="0"></TextBlock>
                                 <TextBlock Name="ContentTextBlock1" 
                                            FontSize="24" 
@@ -146,6 +146,11 @@
                 <AppBarButton Label="注销" ></AppBarButton>
                 <AppBarButton  Label="设置" ></AppBarButton>
             </CommandBar.SecondaryCommands>
+            
         </CommandBar>
+
+        <Popup>
+            
+        </Popup>
     </Grid>
 </Page>

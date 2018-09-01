@@ -6,6 +6,8 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -44,8 +46,10 @@ namespace YourDiary3.Views
             reminds = SqliteDatabase.LoadFromDatabase2(DBName, RemindTableName);
         }
 
-        private void AddAppBarButton_Click(object sender, RoutedEventArgs e)
+        private async void AddAppBarButton_Click(object sender, RoutedEventArgs e)
         {
+
+            Functions.SetCanvasZ("01");
             #region 脑残式新建功能实现，不完整功能
             //if (MyPivot.SelectedItem == BeiWangLuPivotItem)
             //{
@@ -88,23 +92,82 @@ namespace YourDiary3.Views
             //}
             #endregion
 
-            if (MyPivot.SelectedItem.ToString() == "BeiWangLuListView")
+            try
             {
-                MainPage.current.RightFrame.Navigate(typeof(RemindContentPage));
-            }
-            else
-            {
-                foreach (var item in diaries)
+                if (MyPivot.SelectedItem == BeiWangLuPivotItem)
                 {
-                    if (item.Date == DateTime.Now.ToLongDateString())
+                    if (RemindContentPage.current.ContentTextBox.Text != ((Remind)BeiWangLuListView.SelectedItem).Content)
                     {
-                        MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), item);
-                        return;
+                        //MessageDialog md = new MessageDialog("保存编辑");
+
+                        //await md.ShowAsync();
+                        
+                        ContentDialog cd = new ContentDialog();
+                        cd.Title = "YourDiary";
+                        cd.Content = "是否保存编辑内容";
+                        cd.PrimaryButtonText = "是";
+                        cd.SecondaryButtonText = "否";
+                        cd.PrimaryButtonClick += Cd_PrimaryButtonClick;
+                        cd.SecondaryButtonClick += Cd_SecondaryButtonClick;
+                        await cd.ShowAsync();
+
+
+                    }
+                    else
+                    {
+                        MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), "1");
                     }
                     
                 }
-                MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage),1);
+                else
+                {
+                    foreach (var item in diaries)
+                    {
+                        if (item.Date == DateTime.Now.ToLongDateString())
+                        {
+                            MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), item);
+                            return;
+                        }
+
+                    }
+                    MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), 1);
+                }
+
+
             }
+            catch { }
+            
+        }
+
+        private void Cd_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), "1");
+        }
+
+        private void Cd_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            
+            foreach (var item in reminds)
+            {
+                if (RemindContentPage.current.TitleTextblock.Text == item.Date)
+                {
+                    item.Content = RemindContentPage.current.ContentTextBox.Text;
+                    string sql = "UPDATE " + RemindTableName + " SET CSY_CONTENT='" + item.Content + "' WHERE CSY_DATE='" + item.Date + "'";
+                    string conn = "Filename=" + ApplicationData.Current.LocalFolder.Path + "\\" + DBName;
+                    SqliteDatabase.UpdateData(conn, sql);
+                    MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), "1");
+                    return;
+
+                }
+            }
+
+            Remind remind = new Remind();
+            remind.Date = RemindContentPage.current.TitleTextblock.Text;
+            remind.Content = RemindContentPage.current.ContentTextBox.Text;
+            reminds.Add(remind);
+
+            SqliteDatabase.InsertData(remind, DBName, RemindTableName);
+            MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), "1");
         }
 
         public void AddItem(string date,string weather,string content)
@@ -128,6 +191,17 @@ namespace YourDiary3.Views
             MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), e.ClickedItem);
         }
 
-        
+        private void MyPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (MyPivot.SelectedItem == DiaryPivotItem)
+            {
+                MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), 1);
+
+            }
+            else
+            {
+                MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), "1");
+            }
+        }
     }
 }

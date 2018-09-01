@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -40,15 +41,34 @@ namespace YourDiary3.Views
             {
                 TitleTextblock.Text = DateTime.Now.ToString();
             }
+            else if(e.Parameter.GetType() == typeof(Remind))
+            {
+                TitleTextblock.Text = ((Remind)e.Parameter).Date;
+                ContentTextBox.Text = ((Remind)e.Parameter).Content;
+            }
         }
 
         private void SaveAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             SaveToCollection();
+            Functions.SetCanvasZ("10");
         }
 
         private void SaveToCollection()
         {
+            foreach (var item in ListViewPage.current.reminds)
+            {
+                if (TitleTextblock.Text == item.Date)
+                {
+
+                    item.Content = ContentTextBox.Text;
+                    string sql = "UPDATE " + RemindTableName + " SET CSY_CONTENT='" + item.Content + "' WHERE CSY_DATE='" + item.Date + "'";
+                    string conn = "Filename=" + ApplicationData.Current.LocalFolder.Path + "\\" + DBName;
+                    SqliteDatabase.UpdateData(conn, sql);
+                    //MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), "1");
+                    return;
+                }
+            }
             Remind remind = new Remind();
             remind.Date = TitleTextblock.Text;
             remind.Content = ContentTextBox.Text;

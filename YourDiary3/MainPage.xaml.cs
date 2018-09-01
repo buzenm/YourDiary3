@@ -45,7 +45,14 @@ namespace YourDiary3
             LeftFrame.Navigate(typeof(ListViewPage));
             //RightFrame.Navigate(typeof(DiaryContentPage));
             current = this;
-            
+            RightFrame.Navigate(typeof(RemindContentPage), "1");
+
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+            Functions.SetCanvasZ("10");
         }
 
         /// <summary>

@@ -8,6 +8,7 @@ using Windows.Storage;
 using System.IO;
 using System.Collections.ObjectModel;
 using Microsoft.Data.Sqlite;
+using Windows.UI.Xaml.Controls;
 
 namespace YourDiary3.Models
 {
@@ -53,6 +54,21 @@ namespace YourDiary3.Models
             
         }
 
+        public static void SetCanvasZ(string zIndex)
+        {
+             
+            if(zIndex == "10")
+            {
+                Canvas.SetZIndex(MainPage.current.LeftFrame, 1);
+                Canvas.SetZIndex(MainPage.current.RightFrame, 0);
+            }
+            else
+            {
+                Canvas.SetZIndex(MainPage.current.LeftFrame, 0);
+                Canvas.SetZIndex(MainPage.current.RightFrame, 1);
+            }
+
+        }
 
     }
 }

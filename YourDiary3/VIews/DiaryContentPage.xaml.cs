@@ -62,6 +62,7 @@ namespace YourDiary3.Views
         private void SaveAppBarButton_Click(object sender, RoutedEventArgs e)
         {
             SavetoCollection();
+            Functions.SetCanvasZ("10");
         }
 
         public void SavetoCollection()
