@@ -18,7 +18,7 @@
 
         <TextBlock FontSize="26" 
                    Name="TitleTextBlock" 
-                   Margin="20,7,25,0">2012-12-12</TextBlock>
+                   Margin="20,7,25,0"></TextBlock>
         <TextBox Grid.Row="1" 
                  Name="ContentTextBox"
                  Margin="20,10,25,10" 
@@ -29,18 +29,22 @@
                  PlaceholderText="学而不思则罔，思而不学则殆，不思不学则网贷"></TextBox>
         <ComboBox Grid.Row="2" 
                   HorizontalAlignment="Right" 
-                  Margin="0,0,25,20" 
+                  Margin="0,0,25,10" 
                   Height="35" 
                   PlaceholderText="天气" 
                   FontSize="18" 
                   Name="WeatherComboBox" 
                   SelectionChanged="WeatherComboBox_SelectionChanged">
-            <ComboBoxItem Content="晴">
+            <!--<ComboBoxItem Content="晴">
                 
             </ComboBoxItem>
             <ComboBoxItem Content="多云"></ComboBoxItem>
             <ComboBoxItem Content="阴"></ComboBoxItem>
-            <ComboBoxItem Content="雨"></ComboBoxItem>
+            <ComboBoxItem Content="雨"></ComboBoxItem>-->
+            <x:String>晴</x:String>
+            <x:String>多云</x:String>
+            <x:String>阴</x:String>
+            <x:String>雨</x:String>
         </ComboBox>
         <CommandBar Grid.Row="3" 
                     Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}">

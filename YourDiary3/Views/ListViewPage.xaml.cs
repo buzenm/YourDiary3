@@ -46,47 +46,65 @@ namespace YourDiary3.Views
 
         private void AddAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            if (MyPivot.SelectedItem == BeiWangLuPivotItem)
+            #region 脑残式新建功能实现，不完整功能
+            //if (MyPivot.SelectedItem == BeiWangLuPivotItem)
+            //{
+            //    try
+            //    {
+            //        if (MainPage.current.RightFrame.SourcePageType.Name != "RemindContentPage")
+            //        {
+            //            MainPage.current.RightFrame.Navigate(typeof(RemindContentPage),"1");
+            //        }
+            //        else
+            //        {
+            //            if (RemindContentPage.current.ContentTextBox.Text == string.Empty)
+            //            {
+            //                MainPage.current.RightFrame.Navigate(typeof(RemindContentPage),"1");
+            //            }
+            //        }
+            //    }
+            //    catch
+            //    {
+            //        MainPage.current.RightFrame.Navigate(typeof(RemindContentPage),"1");
+            //    }
+            //    //AddItem(DateTime.Now)
+
+
+            //}
+            //else
+            //{
+            //    try
+            //    {
+            //        if (MainPage.current.RightFrame.SourcePageType.Name != "DiaryContentPage")
+            //        {
+            //            MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage),1);
+            //        }
+
+            //    }
+            //    catch
+            //    {
+            //        MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage),1);
+            //    }
+            //}
+            #endregion
+
+            if (MyPivot.SelectedItem.ToString() == "BeiWangLuListView")
             {
-                try
-                {
-                    if (MainPage.current.RightFrame.SourcePageType.Name != "RemindContentPage")
-                    {
-                        MainPage.current.RightFrame.Navigate(typeof(RemindContentPage),"1");
-                    }
-                    else
-                    {
-                        if (RemindContentPage.current.ContentTextBox.Text == string.Empty)
-                        {
-                            MainPage.current.RightFrame.Navigate(typeof(RemindContentPage),"1");
-                        }
-                    }
-                }
-                catch
-                {
-                    MainPage.current.RightFrame.Navigate(typeof(RemindContentPage),"1");
-                }
-                //AddItem(DateTime.Now)
-                
-                
+                MainPage.current.RightFrame.Navigate(typeof(RemindContentPage));
             }
             else
             {
-                try
+                foreach (var item in diaries)
                 {
-                    if (MainPage.current.RightFrame.SourcePageType.Name != "DiaryContentPage")
+                    if (item.Date == DateTime.Now.ToLongDateString())
                     {
-                        MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage),1);
+                        MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), item);
+                        return;
                     }
                     
                 }
-                catch
-                {
-                    MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage),1);
-                }
+                MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage),1);
             }
-                
-
         }
 
         public void AddItem(string date,string weather,string content)
@@ -98,6 +116,16 @@ namespace YourDiary3.Views
         {
             Remind remind = new Remind() { Date = date, Content = content };
             reminds.Add(remind);
+        }
+
+        private void BeiWangLuListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), e.ClickedItem);
+        }
+
+        private void DiaryListView_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), e.ClickedItem);
         }
 
         

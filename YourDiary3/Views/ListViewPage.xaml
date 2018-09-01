@@ -90,7 +90,7 @@
         </Grid.RowDefinitions>
         <Pivot Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" Name="MyPivot" Margin="0,0,0,48">
             <PivotItem Header="备忘录" Margin="0,0,0,0" Name="BeiWangLuPivotItem">
-                <ListView Name="BeiWangLuListView" ItemsSource="{x:Bind reminds}" >
+                <ListView Name="BeiWangLuListView" ItemsSource="{x:Bind reminds}" ItemClick="BeiWangLuListView_ItemClick">
                     
                     <ListView.ItemTemplate >
 
@@ -113,7 +113,7 @@
                 </ListView>
             </PivotItem>
             <PivotItem Header="日记" Name="DiaryPivotItem">
-                <ListView Name="DiaryListView" ItemsSource="{x:Bind diaries}">
+                <ListView Name="DiaryListView" ItemsSource="{x:Bind diaries}" IsItemClickEnabled="True" ItemClick="DiaryListView_ItemClick">
                     <ListView.ItemTemplate >
                         <DataTemplate x:DataType="local1:Diary">
                             <StackPanel Orientation="Vertical">

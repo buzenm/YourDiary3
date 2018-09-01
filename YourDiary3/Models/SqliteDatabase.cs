@@ -153,5 +153,16 @@ namespace YourDiary3.Models
 
         }
 
+        public static void UpdateData(string DBName,string sql)
+        {
+            using(SqliteConnection db=new SqliteConnection(DBName))
+            {
+                db.Open();
+                SqliteCommand comm = new SqliteCommand(sql,db);
+                comm.ExecuteReader();
+                db.Close();
+            }
+        }
+
     }
 }
