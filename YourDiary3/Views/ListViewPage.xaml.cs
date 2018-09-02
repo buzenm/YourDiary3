@@ -117,6 +117,7 @@ namespace YourDiary3.Views
                     {
                         MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), "1");
                     }
+                    BeiWangLuListView.SelectedIndex = -1;
                     
                 }
                 else
@@ -126,12 +127,15 @@ namespace YourDiary3.Views
                         if (item.Date == DateTime.Now.ToLongDateString())
                         {
                             MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), item);
+                            DiaryListView.SelectedIndex = -1;
                             return;
                         }
 
                     }
                     MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), 1);
+                    DiaryListView.SelectedIndex = -1;
                 }
+                
 
 
             }
@@ -198,12 +202,12 @@ namespace YourDiary3.Views
         {
             if (MyPivot.SelectedItem == DiaryPivotItem)
             {
-                MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), 1);
+                MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), "1");
 
             }
             else
             {
-                MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), "1");
+                MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), 1);
             }
         }
     }

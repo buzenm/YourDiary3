@@ -6,6 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -27,6 +28,7 @@ namespace YourDiary3.Views
         public static RemindContentPage current;
         private static readonly string DBName = "YourDiary.db3";
         private static readonly string RemindTableName = "CSY_REMIND";
+        private bool FirstLoad = true;
         public RemindContentPage()
         {
             this.InitializeComponent();
@@ -40,13 +42,54 @@ namespace YourDiary3.Views
             if (e.Parameter.GetType() == typeof(string))
             {
                 TitleTextblock.Text = DateTime.Now.ToString();
+                if (FirstLoad)
+                {
+                    MainPage.current.RightFrame.BackStack.Clear();
+                    FirstLoad = false;
+                }
+                if (MainPage.current.RightFrame.BackStack.Count == 2)
+                {
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+                    SystemNavigationManager.GetForCurrentView().BackRequested += RemindContentPage_BackRequested;
+                }
+                
             }
             else if(e.Parameter.GetType() == typeof(Remind))
             {
                 TitleTextblock.Text = ((Remind)e.Parameter).Date;
                 ContentTextBox.Text = ((Remind)e.Parameter).Content;
+                if (MainPage.current.RightFrame.BackStack.Count >0)
+                {
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+                    SystemNavigationManager.GetForCurrentView().BackRequested += RemindContentPage_BackRequested;
+                }
+                
+            }
+            else if (e.Parameter.GetType() == typeof(int))
+            {
+                TitleTextblock.Text = DateTime.Now.ToString();
             }
         }
+
+        private void RemindContentPage_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            if (MainPage.current.RightFrame.CanGoBack)
+            {
+                MainPage.current.RightFrame.GoBack();
+                MainPage.current.RightFrame.BackStack.Clear();
+                ListViewPage.current.BeiWangLuListView.SelectedIndex = -1;
+            }
+        }
+
+        protected override void OnNavigatedFrom(NavigationEventArgs e)
+        {
+            base.OnNavigatedFrom(e);
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            SystemNavigationManager.GetForCurrentView().BackRequested -= RemindContentPage_BackRequested;
+            Functions.SetCanvasZ("10");
+        }
+
+        
 
         private void SaveAppBarButton_Click(object sender, RoutedEventArgs e)
         {
@@ -76,5 +119,7 @@ namespace YourDiary3.Views
 
             SqliteDatabase.InsertData(remind, DBName, RemindTableName);
         }
+
+        
     }
 }

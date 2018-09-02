@@ -92,6 +92,7 @@
                Name="MyPivot" Margin="0,0,0,48" SelectionChanged="MyPivot_SelectionChanged">
             <PivotItem Header="备忘录" Margin="0,0,0,0" Name="BeiWangLuPivotItem">
                 <ListView Name="BeiWangLuListView" ItemsSource="{x:Bind reminds}" 
+                          x:FieldModifier="Public"
                           ItemClick="BeiWangLuListView_ItemClick" IsItemClickEnabled="True">
                     <ListView.ItemTemplate >
                         <DataTemplate x:DataType="local1:Remind">
@@ -114,6 +115,7 @@
             </PivotItem>
             <PivotItem Header="日记" Name="DiaryPivotItem">
                 <ListView Name="DiaryListView" ItemsSource="{x:Bind diaries}" 
+                          x:FieldModifier="Public"
                           IsItemClickEnabled="True" ItemClick="DiaryListView_ItemClick">
                     <ListView.ItemTemplate >
                         <DataTemplate x:DataType="local1:Diary">
