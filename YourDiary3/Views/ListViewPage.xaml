@@ -105,6 +105,7 @@
                                            FontSize="24" 
                                            TextWrapping="Wrap"
                                            Margin="0,0,0,5" 
+                                           MaxHeight="72"
                                            Text="{x:Bind Content,Mode=TwoWay}"></TextBlock>
                             </StackPanel>
                         </DataTemplate>
@@ -138,7 +139,8 @@
             </PivotItem>
         </Pivot>
 
-        <CommandBar VerticalAlignment="Bottom" Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}">
+        <CommandBar VerticalAlignment="Bottom" Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" 
+                    HorizontalAlignment="Stretch">
             <AppBarButton Icon="Add" Label="添加" Name="AddAppBarButton" Click="AddAppBarButton_Click"></AppBarButton>
             <AppBarButton Icon="Sync" Label="同步"></AppBarButton>
             <CommandBar.SecondaryCommands>
@@ -148,9 +150,6 @@
             </CommandBar.SecondaryCommands>
             
         </CommandBar>
-
-        <Popup>
-            
-        </Popup>
+        
     </Grid>
 </Page>

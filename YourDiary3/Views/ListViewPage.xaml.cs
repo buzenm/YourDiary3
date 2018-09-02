@@ -183,11 +183,14 @@ namespace YourDiary3.Views
 
         private void BeiWangLuListView_ItemClick(object sender, ItemClickEventArgs e)
         {
+            Functions.SetCanvasZ("01");
             MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), e.ClickedItem);
+            
         }
 
         private void DiaryListView_ItemClick(object sender, ItemClickEventArgs e)
         {
+            Functions.SetCanvasZ("01");
             MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), e.ClickedItem);
         }
 
