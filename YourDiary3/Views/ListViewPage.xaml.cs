@@ -102,12 +102,14 @@ namespace YourDiary3.Views
                         //MessageDialog md = new MessageDialog("保存编辑");
 
                         //await md.ShowAsync();
-                        
-                        ContentDialog cd = new ContentDialog();
-                        cd.Title = "YourDiary";
-                        cd.Content = "是否保存编辑内容";
-                        cd.PrimaryButtonText = "是";
-                        cd.SecondaryButtonText = "否";
+
+                        ContentDialog cd = new ContentDialog
+                        {
+                            Title = "YourDiary",
+                            Content = "是否保存编辑内容",
+                            PrimaryButtonText = "是",
+                            SecondaryButtonText = "否"
+                        };
                         cd.PrimaryButtonClick += Cd_PrimaryButtonClick;
                         cd.SecondaryButtonClick += Cd_SecondaryButtonClick;
                         await cd.ShowAsync();
@@ -121,7 +123,7 @@ namespace YourDiary3.Views
                     BeiWangLuListView.SelectedIndex = -1;
                     
                 }
-                else
+                else if(MyPivot.SelectedItem==DiaryPivotItem)
                 {
                     foreach (var item in diaries)
                     {
@@ -199,19 +201,51 @@ namespace YourDiary3.Views
             MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), e.ClickedItem);
         }
 
-        private void MyPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private bool FirstLoad = true;
+        private async void MyPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (FirstLoad)
+            {
+                FirstLoad = false;
+                return;
+            }
             if (MyPivot.SelectedItem == DiaryPivotItem)
             {
                 if (SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility == AppViewBackButtonVisibility.Visible)
                 {
                     SystemNavigationManager.GetForCurrentView().BackRequested -= RemindContentPage.RemindContentPage_BackRequested;
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-                    BeiWangLuListView.SelectedIndex = -1;
+                    
                 }
                 MainPage.current.RightFrame.BackStack.Clear();
-                MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), "1");
+                
+                try
+                {
+                    if (RemindContentPage.current.ContentTextBox.Text != ((Remind)BeiWangLuListView.SelectedItem).Content)
+                    {
+                        //MessageDialog md = new MessageDialog("保存编辑");
 
+                        //await md.ShowAsync();
+
+                        ContentDialog cd = new ContentDialog
+                        {
+                            Title = "YourDiary",
+                            Content = "是否保存编辑内容",
+                            PrimaryButtonText = "是",
+                            SecondaryButtonText = "否"
+                        };
+                        cd.PrimaryButtonClick += Cd_PrimaryButtonClick;
+                        cd.SecondaryButtonClick += Cd_SecondaryButtonClick;
+                        await cd.ShowAsync();
+
+
+                    }
+                    
+                    BeiWangLuListView.SelectedIndex = -1;
+                    MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), "1");
+                }
+                catch { }
+                
             }
             else
             {
@@ -223,7 +257,56 @@ namespace YourDiary3.Views
                 }
                 MainPage.current.RightFrame.BackStack.Clear();
                 MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), 1);
+                try
+                {
+                    if (DiaryContentPage.current.ContentTextBox.Text == ((Diary)DiaryListView.SelectedItem).Content)
+                    {
+                        ContentDialog cd1 = new ContentDialog
+                        {
+                            Title = "YourDiary",
+                            Content = "是否保存编辑内容",
+                            PrimaryButtonText = "是",
+                            SecondaryButtonText = "否"
+                        };
+                        cd1.PrimaryButtonClick += Cd1_PrimaryButtonClick;
+                        cd1.SecondaryButtonClick += Cd1_SecondaryButtonClick;
+                    }
+                    MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), 1);
+                    DiaryListView.SelectedIndex = -1;
+                }
+                catch { }
+                
+
             }
+        }
+
+        private void Cd1_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), "1");
+        }
+
+        private void Cd1_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            foreach (var item in ListViewPage.current.diaries)
+            {
+                if (DiaryContentPage.current.TitleTextBlock.Text == item.Date)
+                {
+                    item.Weather = DiaryContentPage.current.WeatherComboBox.SelectedItem.ToString();
+                    item.Content = DiaryContentPage.current.ContentTextBox.Text;
+                    string sql = "UPDATE " + DiaryTableName + " SET CSY_CONTENT='" + item.Content + "',CSY_WEATHER='" +
+                        item.Weather + "' WHERE CSY_DATE='" + item.Date + "'";
+                    string conn = "Filename=" + ApplicationData.Current.LocalFolder.Path + "\\" + DBName;
+                    SqliteDatabase.UpdateData(conn, sql);
+                    return;
+                }
+            }
+            Diary diary = new Diary();
+            diary.Date = DiaryContentPage.current.TitleTextBlock.Text;
+            diary.Content = DiaryContentPage.current.ContentTextBox.Text;
+            diary.Weather = DiaryContentPage.current.WeatherComboBox.SelectionBoxItem.ToString();
+            ListViewPage.current.diaries.Add(diary);
+
+            SqliteDatabase.InsertData(diary, DBName, DiaryTableName);
         }
     }
 }

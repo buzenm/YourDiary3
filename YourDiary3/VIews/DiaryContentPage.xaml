@@ -18,6 +18,7 @@
 
         <TextBlock FontSize="26" 
                    Name="TitleTextBlock" 
+                   x:FieldModifier="Public"
                    Margin="20,7,25,0"></TextBlock>
         <TextBox Grid.Row="1" 
                  Name="ContentTextBox"
@@ -33,6 +34,7 @@
                   Height="35" 
                   PlaceholderText="天气" 
                   FontSize="18" 
+                  x:FieldModifier="Public"
                   Name="WeatherComboBox" 
                   SelectionChanged="WeatherComboBox_SelectionChanged">
             <!--<ComboBoxItem Content="晴">
