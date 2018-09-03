@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -202,11 +203,25 @@ namespace YourDiary3.Views
         {
             if (MyPivot.SelectedItem == DiaryPivotItem)
             {
+                if (SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility == AppViewBackButtonVisibility.Visible)
+                {
+                    SystemNavigationManager.GetForCurrentView().BackRequested -= RemindContentPage.RemindContentPage_BackRequested;
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                    BeiWangLuListView.SelectedIndex = -1;
+                }
+                MainPage.current.RightFrame.BackStack.Clear();
                 MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), "1");
 
             }
             else
             {
+                if (SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility == AppViewBackButtonVisibility.Visible)
+                {
+                    SystemNavigationManager.GetForCurrentView().BackRequested -= DiaryContentPage.DiaryContentPage_BackRequested;
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                    DiaryListView.SelectedIndex = -1;
+                }
+                MainPage.current.RightFrame.BackStack.Clear();
                 MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), 1);
             }
         }

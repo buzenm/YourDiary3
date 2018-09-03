@@ -28,9 +28,8 @@ namespace YourDiary3.Views
     {
         private static readonly string DBName = "YourDiary.db3";
         private static readonly string DiaryTableName = "CSY_DIARY";
-        private bool FirstLoad = true;
         public static DiaryContentPage current;
-        
+        private bool Firstload = true;
         public DiaryContentPage()
         {
             this.InitializeComponent();
@@ -50,17 +49,20 @@ namespace YourDiary3.Views
             if (e.Parameter.GetType() == typeof(int))
             {
                 TitleTextBlock.Text = DateTime.Now.ToLongDateString();
-                if (FirstLoad)
-                {
-                    MainPage.current.RightFrame.BackStack.Clear();
-                    FirstLoad = false;
-                }
-                if (MainPage.current.RightFrame.BackStack.Count == 1)
+                //if (FirstLoad)
+                //{
+                //    MainPage.current.RightFrame.BackStack.Clear();
+                //    FirstLoad = false;
+                //}
+                if ((MainPage.current.RightFrame.BackStackDepth==2&&Firstload)||MainPage.current.RightFrame.BackStackDepth==1)
                 {
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                     SystemNavigationManager.GetForCurrentView().BackRequested += DiaryContentPage_BackRequested;
+                    Firstload = false;
                 }
-                
+
+
+
             }
             else if (e.Parameter.GetType() == typeof(Diary))
             {
@@ -68,12 +70,16 @@ namespace YourDiary3.Views
                 TitleTextBlock.Text = diary.Date;
                 ContentTextBox.Text = diary.Content;
                 WeatherComboBox.SelectedItem = diary.Weather;
-                if (MainPage.current.RightFrame.BackStack.Count == 1)
+                if ((MainPage.current.RightFrame.BackStackDepth == 2 && Firstload)|| MainPage.current.RightFrame.BackStackDepth == 1)
                 {
+                    
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                     SystemNavigationManager.GetForCurrentView().BackRequested += DiaryContentPage_BackRequested;
+                    Firstload = false;
                 }
-                
+
+
+
             }
             else if (e.Parameter.GetType() == typeof(string))
             {
@@ -84,13 +90,18 @@ namespace YourDiary3.Views
             
         }
 
-        private void DiaryContentPage_BackRequested(object sender, BackRequestedEventArgs e)
+        public static void DiaryContentPage_BackRequested(object sender, BackRequestedEventArgs e)
         {
             if (MainPage.current.RightFrame.CanGoBack)
             {
-                MainPage.current.RightFrame.GoBack();
+                //MainPage.current.RightFrame.GoBack();
+                MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), 1);
                 MainPage.current.RightFrame.BackStack.Clear();
                 ListViewPage.current.DiaryListView.SelectedIndex = -1;
+                Functions.SetCanvasZ("10");
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                SystemNavigationManager.GetForCurrentView().BackRequested -= DiaryContentPage_BackRequested;
+
             }
             
 
@@ -99,9 +110,8 @@ namespace YourDiary3.Views
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-            SystemNavigationManager.GetForCurrentView().BackRequested -= DiaryContentPage_BackRequested;
-            Functions.SetCanvasZ("10");
+            
+            
         }
 
         private void SaveAppBarButton_Click(object sender, RoutedEventArgs e)

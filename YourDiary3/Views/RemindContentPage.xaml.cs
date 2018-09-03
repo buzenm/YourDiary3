@@ -42,28 +42,31 @@ namespace YourDiary3.Views
             if (e.Parameter.GetType() == typeof(string))
             {
                 TitleTextblock.Text = DateTime.Now.ToString();
-                if (FirstLoad)
-                {
-                    MainPage.current.RightFrame.BackStack.Clear();
-                    FirstLoad = false;
-                }
-                if (MainPage.current.RightFrame.BackStack.Count == 2)
+                //if (FirstLoad)
+                //{
+                //    MainPage.current.RightFrame.BackStack.Clear();
+                //    FirstLoad = false;
+                //}
+                if ((MainPage.current.RightFrame.BackStackDepth == 2 && FirstLoad) || MainPage.current.RightFrame.BackStackDepth == 1)
                 {
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                     SystemNavigationManager.GetForCurrentView().BackRequested += RemindContentPage_BackRequested;
+                    FirstLoad = false;
                 }
-                
+
+
             }
             else if(e.Parameter.GetType() == typeof(Remind))
             {
                 TitleTextblock.Text = ((Remind)e.Parameter).Date;
                 ContentTextBox.Text = ((Remind)e.Parameter).Content;
-                if (MainPage.current.RightFrame.BackStack.Count >0)
+                if ((MainPage.current.RightFrame.BackStackDepth == 2 && FirstLoad) || MainPage.current.RightFrame.BackStackDepth == 1)
                 {
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                     SystemNavigationManager.GetForCurrentView().BackRequested += RemindContentPage_BackRequested;
+                    FirstLoad = false;
                 }
-                
+
             }
             else if (e.Parameter.GetType() == typeof(int))
             {
@@ -71,22 +74,24 @@ namespace YourDiary3.Views
             }
         }
 
-        private void RemindContentPage_BackRequested(object sender, BackRequestedEventArgs e)
+        public static void RemindContentPage_BackRequested(object sender, BackRequestedEventArgs e)
         {
             if (MainPage.current.RightFrame.CanGoBack)
             {
-                MainPage.current.RightFrame.GoBack();
+                MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), "1");
                 MainPage.current.RightFrame.BackStack.Clear();
                 ListViewPage.current.BeiWangLuListView.SelectedIndex = -1;
+                Functions.SetCanvasZ("10");
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                SystemNavigationManager.GetForCurrentView().BackRequested -= RemindContentPage_BackRequested;
             }
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
             base.OnNavigatedFrom(e);
-            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-            SystemNavigationManager.GetForCurrentView().BackRequested -= RemindContentPage_BackRequested;
-            Functions.SetCanvasZ("10");
+            
+            
         }
 
         
