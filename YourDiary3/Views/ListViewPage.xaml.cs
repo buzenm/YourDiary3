@@ -93,9 +93,9 @@ namespace YourDiary3.Views
             //}
             #endregion
 
-            try
+            if (MyPivot.SelectedItem == BeiWangLuPivotItem)
             {
-                if (MyPivot.SelectedItem == BeiWangLuPivotItem)
+                try
                 {
                     if (RemindContentPage.current.ContentTextBox.Text != ((Remind)BeiWangLuListView.SelectedItem).Content)
                     {
@@ -119,32 +119,36 @@ namespace YourDiary3.Views
                     else
                     {
                         MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), "1");
-                    }
-                    BeiWangLuListView.SelectedIndex = -1;
-                    
-                }
-                else if(MyPivot.SelectedItem==DiaryPivotItem)
-                {
-                    foreach (var item in diaries)
-                    {
-                        if (item.Date == DateTime.Now.ToLongDateString())
-                        {
-                            MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), item);
-                            DiaryListView.SelectedIndex = -1;
-                            return;
-                        }
 
                     }
-                    MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), 1);
-                    DiaryListView.SelectedIndex = -1;
+                    BeiWangLuListView.SelectedIndex = -1;
+                }
+                catch
+                {
+                    MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), "1");
                 }
                 
 
-
             }
-            catch { }
-            
+            else if (MyPivot.SelectedItem == DiaryPivotItem)
+            {
+                foreach (var item in diaries)
+                {
+                    if (item.Date == DateTime.Now.ToLongDateString())
+                    {
+                        MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), item);
+                        DiaryListView.SelectedIndex = -1;
+                        return;
+                    }
+
+                }
+                MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), 1);
+                DiaryListView.SelectedIndex = -1;
+            }
+
         }
+
+       
 
         private void Cd_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {

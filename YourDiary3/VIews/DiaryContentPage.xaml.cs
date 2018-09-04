@@ -8,6 +8,7 @@ using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -114,9 +115,25 @@ namespace YourDiary3.Views
             
         }
 
-        private void SaveAppBarButton_Click(object sender, RoutedEventArgs e)
+        private async void SaveAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            SavetoCollection();
+            if (ContentTextBox.Text != "")
+            {
+                
+                if(!(WeatherComboBox.SelectedItem is string))
+                {
+                    MessageDialog dialog = new MessageDialog("请选择天气");
+                    await dialog.ShowAsync();
+                    return;
+                }
+                else
+                {
+                    SavetoCollection();
+                }
+            }
+            
+            //if(TitleTextBlock.Text==((Diary)(ListViewPage.current.DiaryListView.SelectedItem)).Date)
+
             Functions.SetCanvasZ("10");
         }
 
@@ -132,6 +149,10 @@ namespace YourDiary3.Views
                         item.Weather + "' WHERE CSY_DATE='" + item.Date + "'";
                     string conn = "Filename=" + ApplicationData.Current.LocalFolder.Path + "\\" + DBName;
                     SqliteDatabase.UpdateData(conn, sql);
+                    MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), "1");
+                    MainPage.current.RightFrame.BackStack.Clear();
+                    ListViewPage.current.DiaryListView.SelectedIndex = -1;
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                     return;
                 }
             }
@@ -142,7 +163,11 @@ namespace YourDiary3.Views
             ListViewPage.current.diaries.Add(diary);
 
             SqliteDatabase.InsertData(diary, DBName, DiaryTableName);
-            
+            MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), "1");
+            MainPage.current.RightFrame.BackStack.Clear();
+            ListViewPage.current.DiaryListView.SelectedIndex = -1;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+
         }
     }
 }

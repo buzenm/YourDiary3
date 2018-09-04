@@ -98,7 +98,11 @@ namespace YourDiary3.Views
 
         private void SaveAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            SaveToCollection();
+            if (ContentTextBox.Text != "")
+            {
+                SaveToCollection();
+            }
+            
             Functions.SetCanvasZ("10");
         }
 
@@ -114,6 +118,10 @@ namespace YourDiary3.Views
                     string conn = "Filename=" + ApplicationData.Current.LocalFolder.Path + "\\" + DBName;
                     SqliteDatabase.UpdateData(conn, sql);
                     //MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), "1");
+                    MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), 1);
+                    MainPage.current.RightFrame.BackStack.Clear();
+                    ListViewPage.current.BeiWangLuListView.SelectedIndex = -1;
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                     return;
                 }
             }
@@ -123,6 +131,10 @@ namespace YourDiary3.Views
             ListViewPage.current.reminds.Add(remind);
 
             SqliteDatabase.InsertData(remind, DBName, RemindTableName);
+            MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), 1);
+            MainPage.current.RightFrame.BackStack.Clear();
+            ListViewPage.current.BeiWangLuListView.SelectedIndex = -1;
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
 
         

@@ -101,9 +101,6 @@ namespace YourDiary3
 
         
 
-        private async void Page_Loading(FrameworkElement sender, object args)
-        {
-            
-        }
+        
     }
 }
