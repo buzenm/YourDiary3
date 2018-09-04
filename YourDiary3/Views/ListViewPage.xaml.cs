@@ -241,25 +241,26 @@ namespace YourDiary3.Views
 
                     }
                     
-                    BeiWangLuListView.SelectedIndex = -1;
-                    MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), "1");
+                    
+                    
                 }
                 catch { }
-                
+                BeiWangLuListView.SelectedIndex = -1;
+                MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), "1");
             }
             else
-            {
+             {
                 if (SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility == AppViewBackButtonVisibility.Visible)
                 {
                     SystemNavigationManager.GetForCurrentView().BackRequested -= DiaryContentPage.DiaryContentPage_BackRequested;
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-                    DiaryListView.SelectedIndex = -1;
+                    
                 }
                 MainPage.current.RightFrame.BackStack.Clear();
-                MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), 1);
+                
                 try
                 {
-                    if (DiaryContentPage.current.ContentTextBox.Text == ((Diary)DiaryListView.SelectedItem).Content)
+                    if (DiaryContentPage.current.ContentTextBox.Text != ((Diary)DiaryListView.SelectedItem).Content)
                     {
                         ContentDialog cd1 = new ContentDialog
                         {
@@ -270,11 +271,14 @@ namespace YourDiary3.Views
                         };
                         cd1.PrimaryButtonClick += Cd1_PrimaryButtonClick;
                         cd1.SecondaryButtonClick += Cd1_SecondaryButtonClick;
+                        await cd1.ShowAsync();
                     }
-                    MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), 1);
-                    DiaryListView.SelectedIndex = -1;
+                    
+                    
                 }
                 catch { }
+                DiaryListView.SelectedIndex = -1;
+                MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), 1);
                 
 
             }
