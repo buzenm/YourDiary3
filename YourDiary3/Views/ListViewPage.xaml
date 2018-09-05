@@ -142,14 +142,23 @@
         </Pivot>
 
         <CommandBar VerticalAlignment="Bottom" Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" 
-                    HorizontalAlignment="Stretch">
+                    HorizontalAlignment="Stretch" OverflowButtonVisibility="Collapsed" ClosedDisplayMode="Compact">
             <AppBarButton Icon="Add" Label="添加" Name="AddAppBarButton" Click="AddAppBarButton_Click"></AppBarButton>
             <AppBarButton Icon="Sync" Label="同步"></AppBarButton>
-            <CommandBar.SecondaryCommands>
+            <!--<CommandBar.SecondaryCommands>
+                
                 <AppBarButton  Label="登录" ></AppBarButton>
                 <AppBarButton Label="注销" ></AppBarButton>
                 <AppBarButton  Label="设置" ></AppBarButton>
-            </CommandBar.SecondaryCommands>
+            </CommandBar.SecondaryCommands>-->
+            <AppBarButton HorizontalAlignment="Right" Icon="More">
+                <AppBarButton.Flyout>
+                    <MenuFlyout>
+                        
+                        <MenuFlyoutItem Text="登录" Name="LoginButton" Click="LoginButton_Click" BorderThickness="0" Padding="0"></MenuFlyoutItem>
+                    </MenuFlyout>
+                </AppBarButton.Flyout>
+            </AppBarButton>
             
         </CommandBar>
         

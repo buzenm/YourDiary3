@@ -14,12 +14,28 @@
             <ColumnDefinition Width="auto"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <Frame Name="LeftFrame" Canvas.ZIndex="1" Margin="0,32,0,0" x:FieldModifier="Public"></Frame>
+        <Frame Name="LeftFrame" Canvas.ZIndex="1" Margin="0,32,0,0" x:FieldModifier="Public">
+            <Frame.ContentTransitions>
+                <TransitionCollection>
+                    <NavigationThemeTransition>
+                        <DrillInNavigationTransitionInfo></DrillInNavigationTransitionInfo>
+                    </NavigationThemeTransition>
+                </TransitionCollection>
+            </Frame.ContentTransitions>
+        </Frame>
         <Frame Grid.Column="1" Name="RightFrame" 
                Canvas.ZIndex="0" 
                Margin="0,32,0,0" 
                x:FieldModifier="Public"               
-               ></Frame>
+               >
+            <Frame.ContentTransitions>
+                <TransitionCollection>
+                    <NavigationThemeTransition>
+                        <DrillInNavigationTransitionInfo></DrillInNavigationTransitionInfo>
+                    </NavigationThemeTransition>
+                </TransitionCollection>
+            </Frame.ContentTransitions>
+        </Frame>
 
 
         <VisualStateManager.VisualStateGroups>

@@ -15,6 +15,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using YourDiary3.Models;
 using YourDiary3.Views;
@@ -118,14 +119,14 @@ namespace YourDiary3.Views
                     }
                     else
                     {
-                        MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), "1");
+                        MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), "1", new DrillInNavigationTransitionInfo());
 
                     }
                     BeiWangLuListView.SelectedIndex = -1;
                 }
                 catch
                 {
-                    MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), "1");
+                    MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), "1", new DrillInNavigationTransitionInfo());
                 }
                 
 
@@ -317,6 +318,11 @@ namespace YourDiary3.Views
             ListViewPage.current.diaries.Add(diary);
 
             SqliteDatabase.InsertData(diary, DBName, DiaryTableName);
+        }
+
+        private void LoginButton_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
