@@ -78,7 +78,7 @@ namespace YourDiary3.Views
         {
             if (MainPage.current.RightFrame.CanGoBack)
             {
-                MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), "1");
+                MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), 1);
                 MainPage.current.RightFrame.BackStack.Clear();
                 ListViewPage.current.BeiWangLuListView.SelectedIndex = -1;
                 Functions.SetCanvasZ("10");
