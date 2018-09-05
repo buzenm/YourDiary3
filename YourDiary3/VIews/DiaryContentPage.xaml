@@ -26,7 +26,7 @@
                  Margin="20,10,25,10" 
                  TextWrapping="Wrap" 
                  AcceptsReturn="True" 
-                 Background="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}"
+                 
                  x:FieldModifier="Public"
                  FontSize="24" 
                  PlaceholderText="学而不思则罔，思而不学则殆，不思不学则网贷"></TextBox>
@@ -35,7 +35,7 @@
                   BorderThickness="0"
                   Margin="0,0,25,10" 
                   Height="35" 
-                  Background="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}"
+                  Background="{ThemeResource SystemControlAltLowAcrylicWindowBrush}"
                   PlaceholderText="天气" 
                   FontSize="18" 
                   x:FieldModifier="Public"
