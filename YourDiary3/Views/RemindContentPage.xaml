@@ -20,7 +20,8 @@
         <TextBox Grid.Row="1" Name="ContentTextBox" AcceptsReturn="True" TextWrapping="Wrap"
                      Margin="20,20,20,20" 
                      FontSize="26" 
-                     
+                     BorderThickness="0" 
+                 Background="{ThemeResource SystemControlAcrylicWindowMediumHighBrush}"
                      x:FieldModifier="Public"></TextBox>
         <CommandBar Grid.Row="2" 
                     Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}">

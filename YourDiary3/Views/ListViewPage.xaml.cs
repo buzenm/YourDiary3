@@ -213,6 +213,7 @@ namespace YourDiary3.Views
                 FirstLoad = false;
                 return;
             }
+            
             if (MyPivot.SelectedItem == DiaryPivotItem)
             {
                 if (SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility == AppViewBackButtonVisibility.Visible)
@@ -221,7 +222,7 @@ namespace YourDiary3.Views
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                     
                 }
-                MainPage.current.RightFrame.BackStack.Clear();
+                
                 
                 try
                 {
@@ -251,6 +252,7 @@ namespace YourDiary3.Views
                 catch { }
                 BeiWangLuListView.SelectedIndex = -1;
                 MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), "1");
+                MainPage.current.RightFrame.BackStack.Clear();
             }
             else
              {
@@ -260,7 +262,7 @@ namespace YourDiary3.Views
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                     
                 }
-                MainPage.current.RightFrame.BackStack.Clear();
+                
                 
                 try
                 {
@@ -283,7 +285,7 @@ namespace YourDiary3.Views
                 catch { }
                 DiaryListView.SelectedIndex = -1;
                 MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), 1);
-                
+                MainPage.current.RightFrame.BackStack.Clear();
 
             }
         }

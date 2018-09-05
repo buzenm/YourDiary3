@@ -30,7 +30,7 @@ namespace YourDiary3.Views
         private static readonly string DBName = "YourDiary.db3";
         private static readonly string DiaryTableName = "CSY_DIARY";
         public static DiaryContentPage current;
-        private bool Firstload = true;
+        
         public DiaryContentPage()
         {
             this.InitializeComponent();
@@ -56,11 +56,11 @@ namespace YourDiary3.Views
                 //    MainPage.current.RightFrame.BackStack.Clear();
                 //    FirstLoad = false;
                 //}
-                if ((MainPage.current.RightFrame.BackStackDepth==2&&Firstload)||MainPage.current.RightFrame.BackStackDepth==1)
+                if ((MainPage.current.RightFrame.BackStackDepth==2&&MainPage.current.FirstLoad)||MainPage.current.RightFrame.BackStackDepth==1)
                 {
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                     SystemNavigationManager.GetForCurrentView().BackRequested += DiaryContentPage_BackRequested;
-                    Firstload = false;
+                    MainPage.current.FirstLoad = false;
                 }
 
 
@@ -73,12 +73,12 @@ namespace YourDiary3.Views
                 TitleTextBlock.Text = diary.Date;
                 ContentTextBox.Text = diary.Content;
                 WeatherComboBox.SelectedItem = diary.Weather;
-                if ((MainPage.current.RightFrame.BackStackDepth == 2 && Firstload)|| MainPage.current.RightFrame.BackStackDepth == 1)
+                if ((MainPage.current.RightFrame.BackStackDepth == 2 && MainPage.current.FirstLoad) || MainPage.current.RightFrame.BackStackDepth == 1)
                 {
                     
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                     SystemNavigationManager.GetForCurrentView().BackRequested += DiaryContentPage_BackRequested;
-                    Firstload = false;
+                    MainPage.current.FirstLoad = false;
                 }
 
 
@@ -88,6 +88,7 @@ namespace YourDiary3.Views
             {
                 TitleTextBlock.Text = DateTime.Now.ToLongDateString();
                 SaveAppBarButton.IsEnabled = false;
+                
             }
 
             

@@ -28,7 +28,7 @@ namespace YourDiary3.Views
         public static RemindContentPage current;
         private static readonly string DBName = "YourDiary.db3";
         private static readonly string RemindTableName = "CSY_REMIND";
-        private bool FirstLoad = true;
+        
         public RemindContentPage()
         {
             this.InitializeComponent();
@@ -47,11 +47,11 @@ namespace YourDiary3.Views
                 //    MainPage.current.RightFrame.BackStack.Clear();
                 //    FirstLoad = false;
                 //}
-                if ((MainPage.current.RightFrame.BackStackDepth == 2 && FirstLoad) || MainPage.current.RightFrame.BackStackDepth == 1)
+                if ((MainPage.current.RightFrame.BackStackDepth == 2 && MainPage.current.FirstLoad) || MainPage.current.RightFrame.BackStackDepth == 1)
                 {
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                     SystemNavigationManager.GetForCurrentView().BackRequested += RemindContentPage_BackRequested;
-                    FirstLoad = false;
+                    MainPage.current.FirstLoad = false;
                 }
 
 
@@ -60,17 +60,18 @@ namespace YourDiary3.Views
             {
                 TitleTextblock.Text = ((Remind)e.Parameter).Date;
                 ContentTextBox.Text = ((Remind)e.Parameter).Content;
-                if ((MainPage.current.RightFrame.BackStackDepth == 2 && FirstLoad) || MainPage.current.RightFrame.BackStackDepth == 1)
+                if ((MainPage.current.RightFrame.BackStackDepth == 2 && MainPage.current.FirstLoad) || MainPage.current.RightFrame.BackStackDepth == 1)
                 {
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                     SystemNavigationManager.GetForCurrentView().BackRequested += RemindContentPage_BackRequested;
-                    FirstLoad = false;
+                    MainPage.current.FirstLoad = false;
                 }
 
             }
             else if (e.Parameter.GetType() == typeof(int))
             {
                 TitleTextblock.Text = DateTime.Now.ToString();
+                MainPage.current.RightFrame.BackStack.Clear();
             }
         }
 

@@ -35,6 +35,7 @@ namespace YourDiary3
         public static readonly string DBName = "YourDiary.db3";
         public static MainPage current;
         public int DeviceWidth = 0;
+        public bool FirstLoad = true;
         //public int LeftFrameWidth = 0;
         public MainPage()
         {
