@@ -47,11 +47,11 @@ namespace YourDiary3.Views
                 //    MainPage.current.RightFrame.BackStack.Clear();
                 //    FirstLoad = false;
                 //}
-                if ((MainPage.current.RightFrame.BackStackDepth == 2 && MainPage.current.FirstLoad) || MainPage.current.RightFrame.BackStackDepth == 1)
+                if (MainPage.current.RightFrame.BackStackDepth == 1)
                 {
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                     SystemNavigationManager.GetForCurrentView().BackRequested += RemindContentPage_BackRequested;
-                    MainPage.current.FirstLoad = false;
+                    
                 }
 
 
@@ -60,11 +60,11 @@ namespace YourDiary3.Views
             {
                 TitleTextblock.Text = ((Remind)e.Parameter).Date;
                 ContentTextBox.Text = ((Remind)e.Parameter).Content;
-                if ((MainPage.current.RightFrame.BackStackDepth == 2 && MainPage.current.FirstLoad) || MainPage.current.RightFrame.BackStackDepth == 1)
+                if (MainPage.current.RightFrame.BackStackDepth == 1)
                 {
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
                     SystemNavigationManager.GetForCurrentView().BackRequested += RemindContentPage_BackRequested;
-                    MainPage.current.FirstLoad = false;
+                    
                 }
 
             }
@@ -72,6 +72,7 @@ namespace YourDiary3.Views
             {
                 TitleTextblock.Text = DateTime.Now.ToString();
                 MainPage.current.RightFrame.BackStack.Clear();
+                Functions.SetCanvasZ("10");
             }
         }
 

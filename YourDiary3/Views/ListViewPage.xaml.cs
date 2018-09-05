@@ -205,14 +205,14 @@ namespace YourDiary3.Views
             MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), e.ClickedItem);
         }
 
-        private bool FirstLoad = true;
+        //private bool FirstLoad = true;
         private async void MyPivot_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (FirstLoad)
-            {
-                FirstLoad = false;
-                return;
-            }
+            //if (FirstLoad)
+            //{
+            //    FirstLoad = false;
+            //    return;
+            //}
             
             if (MyPivot.SelectedItem == DiaryPivotItem)
             {
@@ -252,7 +252,7 @@ namespace YourDiary3.Views
                 catch { }
                 BeiWangLuListView.SelectedIndex = -1;
                 MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), "1");
-                MainPage.current.RightFrame.BackStack.Clear();
+                
             }
             else
              {
@@ -285,7 +285,7 @@ namespace YourDiary3.Views
                 catch { }
                 DiaryListView.SelectedIndex = -1;
                 MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), 1);
-                MainPage.current.RightFrame.BackStack.Clear();
+                
 
             }
         }
