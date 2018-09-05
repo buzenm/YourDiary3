@@ -49,6 +49,7 @@ namespace YourDiary3.Views
             base.OnNavigatedTo(e);
             if (e.Parameter.GetType() == typeof(int))
             {
+                SaveAppBarButton.IsEnabled = true;
                 TitleTextBlock.Text = DateTime.Now.ToLongDateString();
                 //if (FirstLoad)
                 //{
@@ -67,6 +68,7 @@ namespace YourDiary3.Views
             }
             else if (e.Parameter.GetType() == typeof(Diary))
             {
+                SaveAppBarButton.IsEnabled = true;
                 Diary diary = (Diary)e.Parameter;
                 TitleTextBlock.Text = diary.Date;
                 ContentTextBox.Text = diary.Content;
@@ -85,6 +87,7 @@ namespace YourDiary3.Views
             else if (e.Parameter.GetType() == typeof(string))
             {
                 TitleTextBlock.Text = DateTime.Now.ToLongDateString();
+                SaveAppBarButton.IsEnabled = false;
             }
 
             
