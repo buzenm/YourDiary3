@@ -9,6 +9,7 @@ using Windows.ApplicationModel.Core;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI;
+using Windows.UI.Popups;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -34,6 +35,27 @@ namespace YourDiary3
         {
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+
+            this.UnhandledException += OnUnhandledException;
+
+
+        }
+
+        /// <summary>
+        /// Should be called from OnActivated and OnLaunched
+        /// </summary>
+        private void RegisterExceptionHandlingSynchronizationContext()
+        {
+            ExceptionHandlingSynchronizationContext
+                .Register()
+                .UnhandledException += SynchronizationContext_UnhandledException;
+        }
+
+        private async void SynchronizationContext_UnhandledException(object sender, Models.UnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            await new MessageDialog("Synchronization Context Unhandled Exception:\r\n" + e.Exception.Message, "爆了 :(")
+                .ShowAsync();
         }
 
         /// <summary>
@@ -43,6 +65,9 @@ namespace YourDiary3
         /// <param name="e">有关启动请求和过程的详细信息。</param>
         protected async override void OnLaunched(LaunchActivatedEventArgs e)
         {
+
+            RegisterExceptionHandlingSynchronizationContext();
+
             await Functions.SaveToDatabase();
             
             Frame rootFrame = Window.Current.Content as Frame;
@@ -116,6 +141,13 @@ namespace YourDiary3
             titleBar.ButtonForegroundColor = Color.FromArgb(0, 0, 0, 0);
             
 
+        }
+
+        private async void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        {
+            e.Handled = true;
+            await new MessageDialog("Application Unhandled Exception:\r\n" + e.Exception.Message, "爆了 :(")
+                .ShowAsync();
         }
     }
 }

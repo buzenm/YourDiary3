@@ -29,6 +29,8 @@ namespace YourDiary3.Views
     /// </summary>
     public sealed partial class ListViewPage : Page
     {
+        private Remind deleteRemind = new Remind();
+        private Diary deleteDiary = new Diary();
         private static readonly string DBName = "YourDiary.db3";
         private static readonly string DiaryTableName = "CSY_DIARY";
         private static readonly string RemindTableName = "CSY_REMIND";
@@ -323,6 +325,42 @@ namespace YourDiary3.Views
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void BeiWangLuListView_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            deleteRemind = (e.OriginalSource as FrameworkElement)?.DataContext as Remind;
+
+            RemindRightTapPop.ShowAt(BeiWangLuListView);
+        }
+
+        private void DeleteRemindAppbarbutton_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in reminds)
+            {
+                if (deleteRemind.Date == item.Date)
+                {
+                    reminds.Remove(item);
+                    break;
+                }
+            }
+        }
+
+        private void DiaryDeleteAppbarbutton_Click(object sender, RoutedEventArgs e)
+        {
+            foreach (var item in diaries)
+            {
+                if (deleteDiary.Date == item.Date)
+                {
+                    diaries.Remove(item);
+                    break;
+                }
+            }
+        }
+
+        private void DiaryListView_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            deleteDiary = (e.OriginalSource as FrameworkElement)?.DataContext as Diary;
         }
     }
 }

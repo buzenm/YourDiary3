@@ -93,7 +93,18 @@
             <PivotItem Header="备忘录" Margin="0,0,0,0" Name="BeiWangLuPivotItem">
                 <ListView Name="BeiWangLuListView" ItemsSource="{x:Bind reminds}" 
                           x:FieldModifier="Public"
-                          ItemClick="BeiWangLuListView_ItemClick" IsItemClickEnabled="True">
+                          ItemClick="BeiWangLuListView_ItemClick" 
+                          IsItemClickEnabled="True" 
+                          IsRightTapEnabled="True" 
+                          RightTapped="BeiWangLuListView_RightTapped">
+                    <ListView.Resources>
+                        <Flyout x:Name="RemindRightTapPop">
+                            <StackPanel>
+                                <AppBarButton Label="删除" Name="DeleteAppbarbutton" 
+                                              Click="DeleteRemindAppbarbutton_Click"></AppBarButton>
+                            </StackPanel>
+                        </Flyout>
+                    </ListView.Resources>
                     <ListView.ItemTemplate >
                         <DataTemplate x:DataType="local1:Remind">
                             <StackPanel Orientation="Vertical" 
@@ -116,7 +127,16 @@
             <PivotItem Header="日记" Name="DiaryPivotItem">
                 <ListView Name="DiaryListView" ItemsSource="{x:Bind diaries}" 
                           x:FieldModifier="Public"
-                          IsItemClickEnabled="True" ItemClick="DiaryListView_ItemClick">
+                          IsItemClickEnabled="True" ItemClick="DiaryListView_ItemClick" 
+                          IsRightTapEnabled="True" 
+                          RightTapped="DiaryListView_RightTapped">
+                    <ListView.Resources>
+                        <Flyout x:Name="DiaryRightTapPop">
+                            <StackPanel>
+                                <AppBarButton Name="DiaryDeleteAppbarbutton" Label="删除" Click="DiaryDeleteAppbarbutton_Click"></AppBarButton>
+                            </StackPanel>
+                        </Flyout>
+                    </ListView.Resources>
                     <ListView.ItemTemplate >
                         <DataTemplate x:DataType="local1:Diary">
                             <StackPanel Orientation="Vertical">
