@@ -127,7 +127,14 @@ namespace YourDiary3.Views
                 
                 if(!(WeatherComboBox.SelectedItem is string))
                 {
-                    MessageDialog dialog = new MessageDialog("请选择天气");
+                    ContentDialog dialog = new ContentDialog
+                    {
+                        Title = "YourDiary",
+                        Content = "请选择天气",
+                        PrimaryButtonText = "确定"
+                    };
+                    //dialog.PrimaryButtonClick += Dialog_PrimaryButtonClick;
+                    //MessageDialog dialog = new MessageDialog("请选择天气");
                     await dialog.ShowAsync();
                     return;
                 }
@@ -140,6 +147,12 @@ namespace YourDiary3.Views
             //if(TitleTextBlock.Text==((Diary)(ListViewPage.current.DiaryListView.SelectedItem)).Date)
 
             Functions.SetCanvasZ("10");
+        }
+
+        private void Dialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            
+            throw new NotImplementedException();
         }
 
         public void SavetoCollection()
