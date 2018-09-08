@@ -89,7 +89,7 @@
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
         <Pivot Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" 
-               Name="MyPivot" Margin="0,0,0,48" SelectionChanged="MyPivot_SelectionChanged">
+               Name="MyPivot" Margin="0,0,0,0" SelectionChanged="MyPivot_SelectionChanged">
             <PivotItem Header="备忘录" Margin="0,0,0,0" Name="BeiWangLuPivotItem">
                 <ListView Name="BeiWangLuListView" ItemsSource="{x:Bind reminds}" 
                           x:FieldModifier="Public"
@@ -98,12 +98,11 @@
                           IsRightTapEnabled="True" 
                           RightTapped="BeiWangLuListView_RightTapped">
                     <ListView.Resources>
-                        <Flyout x:Name="RemindRightTapPop">
-                            <StackPanel>
-                                <AppBarButton Label="删除" Name="DeleteAppbarbutton" 
-                                              Click="DeleteRemindAppbarbutton_Click"></AppBarButton>
-                            </StackPanel>
-                        </Flyout>
+                        <MenuFlyout x:Name="RemindMenuFlyout">
+                            <MenuFlyoutItem Name="RemindMenuFlyoutItem" 
+                                            Text="删除"
+                                            Click="RemindMenuFlyoutItem_Click"></MenuFlyoutItem>
+                        </MenuFlyout>
                     </ListView.Resources>
                     <ListView.ItemTemplate >
                         <DataTemplate x:DataType="local1:Remind">
@@ -129,17 +128,20 @@
                           x:FieldModifier="Public"
                           IsItemClickEnabled="True" ItemClick="DiaryListView_ItemClick" 
                           IsRightTapEnabled="True" 
-                          RightTapped="DiaryListView_RightTapped">
+                          RightTapped="DiaryListView_RightTapped"
+                          >
                     <ListView.Resources>
-                        <Flyout x:Name="DiaryRightTapPop">
-                            <StackPanel>
-                                <AppBarButton Name="DiaryDeleteAppbarbutton" Label="删除" Click="DiaryDeleteAppbarbutton_Click"></AppBarButton>
-                            </StackPanel>
-                        </Flyout>
+                        <MenuFlyout x:Name="DiaryMenuFlyout">
+                            <MenuFlyoutItem Name="DiaryMenuFlyoutItem" 
+                                            Text="删除" 
+                                            Click="DiaryMenuFlyoutItem_Click">
+                            </MenuFlyoutItem>
+                        </MenuFlyout>
                     </ListView.Resources>
                     <ListView.ItemTemplate >
                         <DataTemplate x:DataType="local1:Diary">
-                            <StackPanel Orientation="Vertical">
+                            <StackPanel Orientation="Vertical" >
+
                                 <TextBlock Name="DateTextBlock1" 
                                            FontSize="18" 
                                            Text="{x:Bind Date}"
@@ -160,27 +162,57 @@
                 </ListView>
             </PivotItem>
         </Pivot>
-
-        <CommandBar VerticalAlignment="Bottom" Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" 
-                    HorizontalAlignment="Stretch" OverflowButtonVisibility="Collapsed" ClosedDisplayMode="Compact">
+        <Frame HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Name="FlyoutFrame" x:FieldModifier="Public"
+               Background="{ThemeResource SystemControlAltMediumLowAcrylicElementMediumBrush}"></Frame>
+        <!--<StackPanel Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Orientation="Vertical" 
+                    Name="FlyoutStackPanel"
+                    Background="{ThemeResource SystemControlAltMediumLowAcrylicElementMediumBrush}" Visibility="Collapsed">
+            <Button Background="{ThemeResource SystemControlAltMediumLowAcrylicElementMediumBrush}" 
+                    Content="登录" FontSize="22" 
+                    Name="LoginButton" 
+                    Click="LoginButton_Click"
+                    HorizontalContentAlignment="Left" 
+                    HorizontalAlignment="Stretch"></Button>
+            <Button Background="{ThemeResource SystemControlAltMediumLowAcrylicElementMediumBrush}" 
+                    Content="注销" FontSize="22" 
+                    Name="ZhuxiaoButton" 
+                    Click="ZhuxiaoButton_Click"
+                    HorizontalContentAlignment="Left" 
+                    HorizontalAlignment="Stretch"></Button>
+            <Button Background="{ThemeResource SystemControlAltMediumLowAcrylicElementMediumBrush}" 
+                    Content="设置" FontSize="22" 
+                    Name="SettingButton" 
+                    Click="SettingButton_Click"
+                    HorizontalContentAlignment="Left" 
+                    HorizontalAlignment="Stretch"></Button>
+        </StackPanel>-->
+        <!--<CommandBar VerticalAlignment="Bottom" Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" 
+                    HorizontalAlignment="Stretch" OverflowButtonVisibility="Collapsed" ClosedDisplayMode="Compact" 
+                    Grid.Row="1">
             <AppBarButton Icon="Add" Label="添加" Name="AddAppBarButton" Click="AddAppBarButton_Click"></AppBarButton>
             <AppBarButton Icon="Sync" Label="同步"></AppBarButton>
-            <!--<CommandBar.SecondaryCommands>
+            --><!--<CommandBar.SecondaryCommands>
                 
                 <AppBarButton  Label="登录" ></AppBarButton>
                 <AppBarButton Label="注销" ></AppBarButton>
                 <AppBarButton  Label="设置" ></AppBarButton>
-            </CommandBar.SecondaryCommands>-->
+            </CommandBar.SecondaryCommands>--><!--
             <AppBarButton HorizontalAlignment="Right" Icon="More">
-                <AppBarButton.Flyout>
-                    <MenuFlyout>
-                        
-                        <MenuFlyoutItem Text="登录" Name="LoginButton" Click="LoginButton_Click" BorderThickness="0" Padding="0"></MenuFlyoutItem>
-                    </MenuFlyout>
-                </AppBarButton.Flyout>
+                
             </AppBarButton>
             
-        </CommandBar>
+        </CommandBar>-->
+        <RelativePanel Grid.Row="1" Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" 
+                       HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Name="FlyoutRelativePanel">
+            <AppBarButton Icon="Edit" Label="写" Name="AddAppbarbutton" Click="AddAppBarButton_Click" 
+                          RelativePanel.LeftOf="SyncAppbarbutton" VerticalAlignment="Stretch"/>
+            <AppBarButton Icon="Sync" Label="同步" FontSize="22" Name="SyncAppbarbutton" RelativePanel.LeftOf="MoreButton" 
+                          VerticalAlignment="Stretch"/>
+            <Button Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" FontFamily="Segoe MDL2 Assets" 
+                    Content="" FontSize="22" Name="MoreButton" RelativePanel.AlignRightWithPanel="True" Click="MoreButton_Click" 
+                    Width="54"
+                    VerticalAlignment="Stretch" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True"></Button>
+        </RelativePanel>
         
     </Grid>
 </Page>

@@ -48,6 +48,7 @@ namespace YourDiary3.Views
             base.OnNavigatedTo(e);
             diaries = SqliteDatabase.LoadFromDatabase(DBName, DiaryTableName);
             reminds = SqliteDatabase.LoadFromDatabase2(DBName, RemindTableName);
+            Canvas.SetZIndex(FlyoutFrame, -1);
         }
 
         private async void AddAppBarButton_Click(object sender, RoutedEventArgs e)
@@ -322,45 +323,77 @@ namespace YourDiary3.Views
             SqliteDatabase.InsertData(diary, DBName, DiaryTableName);
         }
 
-        private void LoginButton_Click(object sender, RoutedEventArgs e)
-        {
+        //private void LoginButton_Click(object sender, RoutedEventArgs e)
+        //{
 
-        }
+        //}
 
         private void BeiWangLuListView_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             deleteRemind = (e.OriginalSource as FrameworkElement)?.DataContext as Remind;
 
-            RemindRightTapPop.ShowAt(BeiWangLuListView);
+            RemindMenuFlyout.ShowAt(BeiWangLuListView, e.GetPosition(BeiWangLuListView));
         }
 
-        private void DeleteRemindAppbarbutton_Click(object sender, RoutedEventArgs e)
+        private void DiaryListView_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            deleteDiary = (e.OriginalSource as FrameworkElement)?.DataContext as Diary;
+            //DiaryRightTapPop.ShowAt(e.OriginalSource as FrameworkElement);
+            DiaryMenuFlyout.ShowAt(DiaryListView, e.GetPosition(DiaryListView));
+        }
+
+        
+
+        private void RemindMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             foreach (var item in reminds)
             {
                 if (deleteRemind.Date == item.Date)
                 {
                     reminds.Remove(item);
+                    string conn = "Filename=" + ApplicationData.Current.LocalFolder.Path + "\\YourDiary.db3";
+                    string sql = "delete from " + RemindTableName + " where CSY_DATE='" + item.Date+"'";
+                    SqliteDatabase.UpdateData(conn, sql);
                     break;
                 }
             }
         }
 
-        private void DiaryDeleteAppbarbutton_Click(object sender, RoutedEventArgs e)
+        private void DiaryMenuFlyoutItem_Click(object sender, RoutedEventArgs e)
         {
             foreach (var item in diaries)
             {
                 if (deleteDiary.Date == item.Date)
                 {
                     diaries.Remove(item);
+                    string conn = "Filename=" + ApplicationData.Current.LocalFolder.Path + "\\YourDiary.db3";
+                    string sql = "delete from " + DiaryTableName + " where CSY_DATE='" + item.Date+"'";
+                    SqliteDatabase.UpdateData(conn, sql);
                     break;
                 }
             }
         }
 
-        private void DiaryListView_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        private void MoreButton_Click(object sender, RoutedEventArgs e)
         {
-            deleteDiary = (e.OriginalSource as FrameworkElement)?.DataContext as Diary;
+            //if (FlyoutStackPanel.Visibility == Visibility.Collapsed)
+            //    FlyoutStackPanel.Visibility = Visibility.Visible;
+            //else
+            //    FlyoutStackPanel.Visibility = Visibility.Collapsed;
+            if (FlyoutFrame.SourcePageType == null || FlyoutFrame.SourcePageType == typeof(BlankPage))
+            {
+                FlyoutFrame.Navigate(typeof(FlyoutStackPanel));
+                Canvas.SetZIndex(FlyoutFrame, 3);
+            }
+            else
+            {
+                FlyoutFrame.Navigate(typeof(BlankPage));
+                Canvas.SetZIndex(FlyoutFrame, -1);
+            }
+
+            //FlyoutFrame.Navigate(typeof(BlankPage));
         }
+
+        
     }
 }
