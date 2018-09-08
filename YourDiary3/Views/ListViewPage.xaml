@@ -162,8 +162,9 @@
                 </ListView>
             </PivotItem>
         </Pivot>
-        <Frame HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Name="FlyoutFrame" x:FieldModifier="Public"
-               Background="{ThemeResource SystemControlAltMediumLowAcrylicElementMediumBrush}"></Frame>
+        <!--<Frame HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Name="FlyoutFrame" x:FieldModifier="Public" 
+               Margin="0,32,0,0"
+               Background="{ThemeResource SystemControlAltMediumLowAcrylicElementMediumBrush}"></Frame>-->
         <!--<StackPanel Grid.Row="0" VerticalAlignment="Bottom" HorizontalAlignment="Stretch" Orientation="Vertical" 
                     Name="FlyoutStackPanel"
                     Background="{ThemeResource SystemControlAltMediumLowAcrylicElementMediumBrush}" Visibility="Collapsed">
@@ -186,33 +187,41 @@
                     HorizontalContentAlignment="Left" 
                     HorizontalAlignment="Stretch"></Button>
         </StackPanel>-->
-        <!--<CommandBar VerticalAlignment="Bottom" Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" 
-                    HorizontalAlignment="Stretch" OverflowButtonVisibility="Collapsed" ClosedDisplayMode="Compact" 
+        <CommandBar VerticalAlignment="Bottom" Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" 
+                    HorizontalAlignment="Stretch" 
                     Grid.Row="1">
             <AppBarButton Icon="Add" Label="添加" Name="AddAppBarButton" Click="AddAppBarButton_Click"></AppBarButton>
-            <AppBarButton Icon="Sync" Label="同步"></AppBarButton>
-            --><!--<CommandBar.SecondaryCommands>
+            <AppBarButton Icon="Sync" Label="同步" Name="SyncAppBarButton" Click="SyncAppBarButton_Click"></AppBarButton>
+            <CommandBar.SecondaryCommands>
                 
-                <AppBarButton  Label="登录" ></AppBarButton>
-                <AppBarButton Label="注销" ></AppBarButton>
-                <AppBarButton  Label="设置" ></AppBarButton>
-            </CommandBar.SecondaryCommands>--><!--
-            <AppBarButton HorizontalAlignment="Right" Icon="More">
-                
-            </AppBarButton>
+                <AppBarButton  Label="登录" Name="LoginAppBarButton" Click="LoginAppBarButton_Click"></AppBarButton>
+                <AppBarButton Label="注销" Name="ZhuXiaoAppBarButton" Click="ZhuXiaoAppBarButton_Click"></AppBarButton>
+                <AppBarButton  Label="设置" Name="SettingAppBarButton" Click="SettingAppBarButton_Click"></AppBarButton>
+            </CommandBar.SecondaryCommands>
             
-        </CommandBar>-->
-        <RelativePanel Grid.Row="1" Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" 
+            
+        </CommandBar>
+        <!--<RelativePanel Grid.Row="1" Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" 
                        HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Name="FlyoutRelativePanel">
             <AppBarButton Icon="Edit" Label="写" Name="AddAppbarbutton" Click="AddAppBarButton_Click" 
                           RelativePanel.LeftOf="SyncAppbarbutton" VerticalAlignment="Stretch"/>
             <AppBarButton Icon="Sync" Label="同步" FontSize="22" Name="SyncAppbarbutton" RelativePanel.LeftOf="MoreButton" 
                           VerticalAlignment="Stretch"/>
-            <Button Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" FontFamily="Segoe MDL2 Assets" 
+            --><!--<Button Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" FontFamily="Segoe MDL2 Assets" 
                     Content="" FontSize="22" Name="MoreButton" RelativePanel.AlignRightWithPanel="True" Click="MoreButton_Click" 
                     Width="54"
-                    VerticalAlignment="Stretch" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True"></Button>
-        </RelativePanel>
+                    VerticalAlignment="Stretch" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignTopWithPanel="True">
+                <Button.Flyout>
+                    <Flyout Placement="Top" >
+                        <StackPanel>
+                            <Button Content="登录" FontSize="22"></Button>
+                            <Button Content="登录" FontSize="22"></Button>
+                            <Button Content="登录" FontSize="22"></Button>
+                        </StackPanel>
+                    </Flyout>
+                </Button.Flyout>
+            </Button>--><!--
+        </RelativePanel>-->
         
     </Grid>
 </Page>

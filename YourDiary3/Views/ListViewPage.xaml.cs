@@ -48,7 +48,7 @@ namespace YourDiary3.Views
             base.OnNavigatedTo(e);
             diaries = SqliteDatabase.LoadFromDatabase(DBName, DiaryTableName);
             reminds = SqliteDatabase.LoadFromDatabase2(DBName, RemindTableName);
-            Canvas.SetZIndex(FlyoutFrame, -1);
+            //Canvas.SetZIndex(FlyoutFrame, -1);
         }
 
         private async void AddAppBarButton_Click(object sender, RoutedEventArgs e)
@@ -380,20 +380,39 @@ namespace YourDiary3.Views
             //    FlyoutStackPanel.Visibility = Visibility.Visible;
             //else
             //    FlyoutStackPanel.Visibility = Visibility.Collapsed;
-            if (FlyoutFrame.SourcePageType == null || FlyoutFrame.SourcePageType == typeof(BlankPage))
-            {
-                FlyoutFrame.Navigate(typeof(FlyoutStackPanel));
-                Canvas.SetZIndex(FlyoutFrame, 3);
-            }
-            else
-            {
-                FlyoutFrame.Navigate(typeof(BlankPage));
-                Canvas.SetZIndex(FlyoutFrame, -1);
-            }
+
+            //if (FlyoutFrame.SourcePageType == null || FlyoutFrame.SourcePageType == typeof(BlankPage))
+            //{
+            //    FlyoutFrame.Navigate(typeof(FlyoutStackPanel));
+            //    Canvas.SetZIndex(FlyoutFrame, 3);
+            //}
+            //else
+            //{
+            //    FlyoutFrame.Navigate(typeof(BlankPage));
+            //    Canvas.SetZIndex(FlyoutFrame, -1);
+            //}
 
             //FlyoutFrame.Navigate(typeof(BlankPage));
         }
 
-        
+        private void LoginAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ZhuXiaoAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SettingAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void SyncAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

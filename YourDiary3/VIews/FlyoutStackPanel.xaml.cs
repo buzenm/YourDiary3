@@ -29,20 +29,20 @@ namespace YourDiary3.Views
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            ListViewPage.current.FlyoutFrame.Navigate(typeof(BlankPage));
-            Canvas.SetZIndex(ListViewPage.current.FlyoutFrame, -1);
+            //ListViewPage.current.FlyoutFrame.Navigate(typeof(BlankPage));
+            //Canvas.SetZIndex(ListViewPage.current.FlyoutFrame, -1);
         }
 
         private void ZhuxiaoButton_Click(object sender, RoutedEventArgs e)
         {
-            ListViewPage.current.FlyoutFrame.Navigate(typeof(BlankPage));
-            Canvas.SetZIndex(ListViewPage.current.FlyoutFrame, -1);
+            //ListViewPage.current.FlyoutFrame.Navigate(typeof(BlankPage));
+            //Canvas.SetZIndex(ListViewPage.current.FlyoutFrame, -1);
         }
 
         private void SettingButton_Click(object sender, RoutedEventArgs e)
         {
-            ListViewPage.current.FlyoutFrame.Navigate(typeof(BlankPage));
-            Canvas.SetZIndex(ListViewPage.current.FlyoutFrame, -1);
+            //ListViewPage.current.FlyoutFrame.Navigate(typeof(BlankPage));
+            //Canvas.SetZIndex(ListViewPage.current.FlyoutFrame, -1);
         }
     }
 }

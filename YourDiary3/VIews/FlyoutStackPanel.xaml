@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid>
+    <Grid Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}">
         <StackPanel VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Orientation="Vertical" 
                     Name="FlyoutStackPanel1"
                     Background="{ThemeResource SystemControlAltMediumLowAcrylicElementMediumBrush}">
