@@ -8,12 +8,22 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    
 
     <Grid Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}">
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+
+        <ProgressRing Name="WaitProgressRing" Grid.ColumnSpan="2" x:FieldModifier="public" 
+                      Canvas.ZIndex="3" Width="60" Height="60" 
+                      Foreground="Gray" 
+                      
+                      >
+            
+        </ProgressRing>
         <Frame Name="LeftFrame" Canvas.ZIndex="1" Margin="0,32,0,0" x:FieldModifier="Public">
             <Frame.ContentTransitions>
                 <TransitionCollection>

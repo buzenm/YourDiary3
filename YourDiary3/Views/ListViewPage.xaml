@@ -190,7 +190,7 @@
         <CommandBar VerticalAlignment="Bottom" Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" 
                     HorizontalAlignment="Stretch" 
                     Grid.Row="1">
-            <AppBarButton Icon="Add" Label="添加" Name="AddAppBarButton" Click="AddAppBarButton_Click"></AppBarButton>
+            <AppBarButton Icon="Edit" Label="写" Name="AddAppBarButton" Click="AddAppBarButton_Click"></AppBarButton>
             <AppBarButton Icon="Sync" Label="同步" Name="SyncAppBarButton" Click="SyncAppBarButton_Click"></AppBarButton>
             <CommandBar.SecondaryCommands>
                 

@@ -54,8 +54,15 @@ namespace YourDiary3
         private async void SynchronizationContext_UnhandledException(object sender, Models.UnhandledExceptionEventArgs e)
         {
             e.Handled = true;
-            await new MessageDialog("Synchronization Context Unhandled Exception:\r\n" + e.Exception.Message, "爆了 :(")
-                .ShowAsync();
+            //await new MessageDialog("Synchronization Context Unhandled Exception:\r\n" + e.Exception.Message, "应用异常")
+            //    .ShowAsync();
+            await new ContentDialog()
+            {
+                Title="YourDiary",
+                Content= "Synchronization Context Unhandled Exception:\r\n" + e.Exception.Message,
+                IsSecondaryButtonEnabled=true,
+                SecondaryButtonText="关闭"
+            }.ShowAsync();
         }
 
         /// <summary>
@@ -146,8 +153,15 @@ namespace YourDiary3
         private async void OnUnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
             e.Handled = true;
-            await new MessageDialog("Application Unhandled Exception:\r\n" + e.Exception.Message, "爆了 :(")
-                .ShowAsync();
+            //await new MessageDialog("Application Unhandled Exception:\r\n" + e.Exception.Message, "爆了 :(")
+            //    .ShowAsync();
+            await new ContentDialog()
+            {
+                Title = "YourDiary",
+                Content = "Application Unhandled Exception:\r\n" + e.Exception.Message,
+                IsSecondaryButtonEnabled = true,
+                SecondaryButtonText = "关闭"
+            }.ShowAsync();
         }
     }
 }

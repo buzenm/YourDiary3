@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Toolkit.Services.OneDrive;
+using Microsoft.Toolkit.Services.Services.MicrosoftGraph;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
@@ -410,9 +412,40 @@ namespace YourDiary3.Views
 
         }
 
-        private void SyncAppBarButton_Click(object sender, RoutedEventArgs e)
+        private async void SyncAppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            string[] scopes = { MicrosoftGraphScope.FilesReadWriteAll};
+            Microsoft.Toolkit.Services.OneDrive
+                .OneDriveService.Instance
+                .Initialize(
+                "fda20434-1d70-4ff0-ab43-d7f3778865ef",
+                scopes, null, null
+                );
+            // After initialization the user will need to log in and give permission for the access scopes
+            MainPage.current.WaitProgressRing.IsActive = true;
 
+            try
+            {
+                if (!await OneDriveService.Instance.LoginAsync())
+                {
+                    
+                    throw new Exception("Unable to sign in");
+                }
+            }
+            catch(Exception ex)
+            {
+                MainPage.current.WaitProgressRing.IsActive = false;
+                ContentDialog dialog = new ContentDialog()
+                {
+                    Title = "YourDiary",
+                    Content = ex.Message,
+                    IsSecondaryButtonEnabled = true,
+                    SecondaryButtonText = "关闭"
+                };
+                await dialog.ShowAsync();
+            }
+            
+            MainPage.current.WaitProgressRing.IsActive = false;
         }
     }
 }
