@@ -10,6 +10,7 @@ using System.Collections.ObjectModel;
 using Microsoft.Data.Sqlite;
 using Windows.UI.Xaml.Controls;
 using Microsoft.Toolkit.Services.OneDrive;
+using Windows.Storage.Streams;
 
 namespace YourDiary3.Models
 {
@@ -74,8 +75,44 @@ namespace YourDiary3.Models
         public async static Task SaveToOnedrive()
         {
             var onedriveAppFolder = await OneDriveService.Instance.AppRootFolderAsync();
+
+            // Creating or uploading files less than 4MB
+            // Open the local file or create a local file if brand new
+            var selectedFile = await ApplicationData.Current.LocalFolder.GetFileAsync("YourDiary.db3");
+            if (selectedFile != null)
+            {
+                using (var localStream = await selectedFile.OpenReadAsync())
+                {
+                    var fileCreated = await onedriveAppFolder.StorageFolderPlatformService.CreateFileAsync(
+                        selectedFile.Name, CreationCollisionOption.ReplaceExisting, localStream);
+                }
+            }
+
+        }
+        
+        public async static Task LoadFromOnedrive()
+        {
+            var oneDriveAppFolder = await OneDriveService.Instance.AppRootFolderAsync();
+
+            // Downloading files
+            // Download a file and save the content in a local file
+            // Convert the storage item to a storage file
+            var oneDriveFile = await oneDriveAppFolder.GetFileAsync("YourDiary.db3");
             
+            using (var remoteStream = (await oneDriveFile.StorageFilePlatformService.OpenAsync()) as IRandomAccessStream)
+            {
+                // Use a helper method to open local filestream and write to it 
+                await SaveToLocalFolder(remoteStream, oneDriveFile.Name);
+            }
+
         }
 
+        public static async Task SaveToLocalFolder(IRandomAccessStream remoteStream,string name)
+        {
+            using (BinaryWriter sw = new BinaryWriter(remoteStream.AsStream()))
+            {
+                
+            }
+        }
     }
 }
