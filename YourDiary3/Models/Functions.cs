@@ -9,6 +9,7 @@ using System.IO;
 using System.Collections.ObjectModel;
 using Microsoft.Data.Sqlite;
 using Windows.UI.Xaml.Controls;
+using Microsoft.Toolkit.Services.OneDrive;
 
 namespace YourDiary3.Models
 {
@@ -68,6 +69,12 @@ namespace YourDiary3.Models
                 Canvas.SetZIndex(MainPage.current.RightFrame, 1);
             }
 
+        }
+
+        public async static Task SaveToOnedrive()
+        {
+            var onedriveAppFolder = await OneDriveService.Instance.AppRootFolderAsync();
+            
         }
 
     }

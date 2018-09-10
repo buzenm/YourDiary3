@@ -51,6 +51,14 @@ namespace YourDiary3.Views
             diaries = SqliteDatabase.LoadFromDatabase(DBName, DiaryTableName);
             reminds = SqliteDatabase.LoadFromDatabase2(DBName, RemindTableName);
             //Canvas.SetZIndex(FlyoutFrame, -1);
+
+            string AppClientID = "cb8d4295-9fd0-4604-b220-ccfbc7aad516";
+            string[] scopes = { MicrosoftGraphScope.FilesReadWriteAppFolder };
+            OneDriveService.Instance
+                .Initialize(
+                AppClientID,
+                scopes, null, null
+                );
         }
 
         private async void AddAppBarButton_Click(object sender, RoutedEventArgs e)
@@ -414,23 +422,19 @@ namespace YourDiary3.Views
 
         private async void SyncAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-            string[] scopes = { MicrosoftGraphScope.FilesReadWriteAll};
-            Microsoft.Toolkit.Services.OneDrive
-                .OneDriveService.Instance
-                .Initialize(
-                "fda20434-1d70-4ff0-ab43-d7f3778865ef",
-                scopes, null, null
-                );
+            
             // After initialization the user will need to log in and give permission for the access scopes
             MainPage.current.WaitProgressRing.IsActive = true;
 
             try
             {
-                if (!await OneDriveService.Instance.LoginAsync())
+                if ((bool)ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] == false)
                 {
-                    
-                    throw new Exception("Unable to sign in");
+                    await OneDriveService.Instance.LoginAsync();
+                    ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] = true;
                 }
+
+                await Functions.SaveToOnedrive();
             }
             catch(Exception ex)
             {
@@ -444,7 +448,10 @@ namespace YourDiary3.Views
                 };
                 await dialog.ShowAsync();
             }
+
             
+
+
             MainPage.current.WaitProgressRing.IsActive = false;
         }
     }

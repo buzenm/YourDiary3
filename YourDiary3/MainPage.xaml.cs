@@ -18,6 +18,7 @@ using System.Threading;
 using Size = Windows.Foundation.Size;
 using YourDiary3.Views;
 using YourDiary3.Models;
+using Windows.Storage;
 
 
 
@@ -54,6 +55,17 @@ namespace YourDiary3
         {
             base.OnNavigatedTo(e);
             Functions.SetCanvasZ("10");
+
+            ApplicationData.Current.LocalSettings.CreateContainer("signStateContainer", ApplicationDataCreateDisposition.Always);
+
+            if (!(ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] is bool))
+
+            {
+
+                ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] = false;
+
+            }
+
         }
 
         /// <summary>
