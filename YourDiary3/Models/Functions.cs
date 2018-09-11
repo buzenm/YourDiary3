@@ -125,9 +125,37 @@ namespace YourDiary3.Models
             
         }
 
-        public async static Task AndDatabase()
+        public async static Task AndDatabaseAsync()
         {
+            string conn = "Filename="+ ApplicationData.Current.LocalFolder + "\\YourDiary1.db3";
+            using(SqliteConnection db1=new SqliteConnection(conn))
+            {
+                db1.Open();
+                string sql = "select * from CSY_DIARY";
+                //SqliteCommand comm1 = new SqliteCommand(sql, db1);
+                //SqliteDataReader dataReader1=await comm1.ExecuteReaderAsync();
 
+                conn = "Filename=" + ApplicationData.Current.LocalFolder + "\\YourDiary.db3";
+                using(SqliteConnection db=new SqliteConnection(conn))
+                {
+                    db.Open();
+                    sql = "select * from CSY_DIARY";
+                    SqliteCommand comm = new SqliteCommand(sql, db);
+                    SqliteDataReader dataReader = await comm.ExecuteReaderAsync();
+                    while (dataReader.Read())
+                    {
+                        sql = "select * from CSY_DIARY where CSY_DATE='" +
+                        dataReader.GetString(0) + "'";
+                        SqliteCommand comm1 = new SqliteCommand(sql, db1);
+                        SqliteDataReader dataReader1 = await comm1.ExecuteReaderAsync();
+                        if (dataReader1 != null)
+                        {
+
+                        }
+                    }
+                }
+                
+            }
         }
     }
 }
