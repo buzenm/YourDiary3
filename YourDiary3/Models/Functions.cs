@@ -109,10 +109,20 @@ namespace YourDiary3.Models
 
         public static async Task SaveToLocalFolder(IRandomAccessStream remoteStream,string name)
         {
-            using (BinaryWriter sw = new BinaryWriter(remoteStream.AsStream()))
+            StorageFolder folder = ApplicationData.Current.LocalFolder;
+            StorageFile localFile = await folder.CreateFileAsync("YourDiary1.db3", CreationCollisionOption.ReplaceExisting);
+
+            using(FileStream fs = File.Open(localFile.Path, FileMode.OpenOrCreate))
             {
-                
+                Stream stream = remoteStream.AsStream();
+                byte[] buffer = new byte[stream.Length];
+                await stream.ReadAsync(buffer, 0, buffer.Length);
+                using(BinaryWriter bw=new BinaryWriter(fs))
+                {
+                    bw.Write(buffer);
+                }
             }
+            
         }
     }
 }
