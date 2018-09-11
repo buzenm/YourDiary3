@@ -194,7 +194,7 @@
             <AppBarButton Icon="Sync" Label="同步" Name="SyncAppBarButton" Click="SyncAppBarButton_Click"></AppBarButton>
             <CommandBar.SecondaryCommands>
                 
-                <AppBarButton  Label="登录" Name="LoginAppBarButton" Click="LoginAppBarButton_Click"></AppBarButton>
+                <AppBarButton  Label="{x:Bind LoginContent,Mode=TwoWay}" Name="LoginAppBarButton" Click="LoginAppBarButton_Click"></AppBarButton>
                 <!--<AppBarButton Label="注销" Name="ZhuXiaoAppBarButton" Click="ZhuXiaoAppBarButton_Click"></AppBarButton>-->
                 <AppBarButton  Label="设置" Name="SettingAppBarButton" Click="SettingAppBarButton_Click"></AppBarButton>
             </CommandBar.SecondaryCommands>

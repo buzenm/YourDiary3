@@ -3,6 +3,7 @@ using Microsoft.Toolkit.Services.Services.MicrosoftGraph;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -29,21 +30,48 @@ namespace YourDiary3.Views
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class ListViewPage : Page
+    public sealed partial class ListViewPage : Page, INotifyPropertyChanged
     {
         private Remind deleteRemind = new Remind();
         private Diary deleteDiary = new Diary();
+        //public string loginContent = "";
+
+        private string loginContent;
+        public string LoginContent
+        {
+            get
+            {
+                return loginContent;
+            }
+            set
+            {
+                if (loginContent != value)
+                {
+                    loginContent = value;
+                    OnPropertyChanged("LoginContent");
+                }
+            }
+        }
         private static readonly string DBName = "YourDiary.db3";
         private static readonly string DiaryTableName = "CSY_DIARY";
         private static readonly string RemindTableName = "CSY_REMIND";
         public static ListViewPage current;
         public ObservableCollection<Remind> reminds = new ObservableCollection<Remind>();
         public ObservableCollection<Diary> diaries = new ObservableCollection<Diary>();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
         public ListViewPage()
         {
             this.InitializeComponent();
             current = this;
         }
+
+        
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -59,6 +87,7 @@ namespace YourDiary3.Views
                 AppClientID,
                 scopes, null, null
                 );
+            
         }
 
         private async void AddAppBarButton_Click(object sender, RoutedEventArgs e)
@@ -328,7 +357,7 @@ namespace YourDiary3.Views
             diary.Date = DiaryContentPage.current.TitleTextBlock.Text;
             diary.Content = DiaryContentPage.current.ContentTextBox.Text;
             diary.Weather = DiaryContentPage.current.WeatherComboBox.SelectionBoxItem.ToString();
-            ListViewPage.current.diaries.Add(diary);
+            current.diaries.Add(diary);
 
             SqliteDatabase.InsertData(diary, DBName, DiaryTableName);
         }
@@ -407,17 +436,25 @@ namespace YourDiary3.Views
 
         private async void LoginAppBarButton_Click(object sender, RoutedEventArgs e)
         {
+            //await OneDriveService.Instance.LogoutAsync();
+            //ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] = true;
+            //ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"] = "注销";
+
+            
             if ((bool)ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] == false)
             {
                 await OneDriveService.Instance.LoginAsync();
                 ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] = true;
-                LoginAppBarButton.Content = "注销";
+                ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"] = "注销";
+                LoginContent = ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"].ToString();
             }
             else
             {
+                var folder = await OneDriveService.Instance.AppRootFolderAsync();
                 await OneDriveService.Instance.LogoutAsync();
-                ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] = true;
-                LoginAppBarButton.Content = "登陆";
+                ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] = false;
+                ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"] = "登陆";
+                LoginContent = ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"].ToString();
             }
         }
         
@@ -431,21 +468,32 @@ namespace YourDiary3.Views
             
             // After initialization the user will need to log in and give permission for the access scopes
             MainPage.current.WaitProgressRing.IsActive = true;
+            
 
             try
             {
+                ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] = false;
+
                 if ((bool)ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] == false)
                 {
+                    MainPage.current.WaitProgressTextBlock.Visibility = Visibility.Visible;
+                    MainPage.current.WaitProgressTextBlock.Text = "正在登录";
                     await OneDriveService.Instance.LoginAsync();
                     ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] = true;
-                    LoginAppBarButton.Content = "注销";
+                    ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"] = "注销";
+                    LoginContent = ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"].ToString();
                 }
-
+                MainPage.current.WaitProgressTextBlock.Text = "连接到OneDrive";
+                await Functions.LoadFromOnedrive();
+                MainPage.current.WaitProgressTextBlock.Text = "合并数据";
+                await Functions.AndDatabaseAsync();
+                MainPage.current.WaitProgressTextBlock.Text = "保存到OneDrive";
                 await Functions.SaveToOnedrive();
             }
             catch(Exception ex)
             {
                 MainPage.current.WaitProgressRing.IsActive = false;
+                MainPage.current.WaitProgressTextBlock.Visibility = Visibility.Collapsed;
                 ContentDialog dialog = new ContentDialog()
                 {
                     Title = "YourDiary",
@@ -456,9 +504,9 @@ namespace YourDiary3.Views
                 await dialog.ShowAsync();
             }
 
-            
 
 
+            MainPage.current.WaitProgressTextBlock.Visibility = Visibility.Collapsed;
             MainPage.current.WaitProgressRing.IsActive = false;
         }
     }

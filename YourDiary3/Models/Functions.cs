@@ -127,15 +127,15 @@ namespace YourDiary3.Models
 
         public async static Task AndDatabaseAsync()
         {
-            string conn = "Filename="+ ApplicationData.Current.LocalFolder + "\\YourDiary1.db3";
+            string conn = "Filename="+ ApplicationData.Current.LocalFolder.Path + "\\YourDiary1.db3";
             using(SqliteConnection db1=new SqliteConnection(conn))
             {
                 db1.Open();
-                string sql = "select * from CSY_DIARY";
+                string sql = "";
                 //SqliteCommand comm1 = new SqliteCommand(sql, db1);
                 //SqliteDataReader dataReader1=await comm1.ExecuteReaderAsync();
 
-                conn = "Filename=" + ApplicationData.Current.LocalFolder + "\\YourDiary.db3";
+                conn = "Filename=" + ApplicationData.Current.LocalFolder.Path + "\\YourDiary.db3";
                 using(SqliteConnection db=new SqliteConnection(conn))
                 {
                     db.Open();
@@ -148,12 +148,40 @@ namespace YourDiary3.Models
                         dataReader.GetString(0) + "'";
                         SqliteCommand comm1 = new SqliteCommand(sql, db1);
                         SqliteDataReader dataReader1 = await comm1.ExecuteReaderAsync();
-                        if (dataReader1 != null)
+                        if (dataReader1.HasRows)
                         {
-
+                            Diary diary = new Diary() { Date = dataReader.GetString(0),
+                                Weather = dataReader1.GetString(1), Content = dataReader1.GetString(2) };
+                            SqliteDatabase.InsertData(diary, 
+                                ApplicationData.Current.LocalFolder.Path+"\\"+ DBName, DiaryTableName);
                         }
                     }
+                    dataReader.Close();
+                    sql = "select * from CSY_REMIND";
+                    SqliteCommand comm2 = new SqliteCommand(sql, db);
+                    SqliteDataReader dataReader2 = await comm.ExecuteReaderAsync();
+                    while (dataReader2.Read())
+                    {
+                        sql = "select * from CSY_REMIND where CSY_DATE='" +
+                        dataReader2.GetString(0) + "'";
+                        SqliteCommand comm1 = new SqliteCommand(sql, db1);
+                        SqliteDataReader dataReader1 = await comm1.ExecuteReaderAsync();
+                        if (dataReader1.HasRows)
+                        {
+                            Remind remind = new Remind()
+                            {
+                                Date = dataReader1.GetString(0),
+                                Content = dataReader1.GetString(1)
+                            };
+                            SqliteDatabase.InsertData(remind,
+                                ApplicationData.Current.LocalFolder.Path + "\\" + DBName, RemindTableName);
+                        }
+                    }
+                    dataReader2.Close();
+                    db.Close();
+
                 }
+                db1.Close();
                 
             }
         }

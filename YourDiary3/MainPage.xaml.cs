@@ -36,7 +36,6 @@ namespace YourDiary3
         public static readonly string DBName = "YourDiary.db3";
         public static MainPage current;
         public int DeviceWidth = 0;
-        public bool FirstLoad = true;
         //public int LeftFrameWidth = 0;
         public MainPage()
         {
@@ -65,6 +64,18 @@ namespace YourDiary3
                 ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] = false;
 
             }
+            ApplicationData.Current.LocalSettings.CreateContainer("signStateContent", ApplicationDataCreateDisposition.Always);
+            if (ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"]==null)
+            {
+                ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"] = "登录";
+                ListViewPage.current.LoginContent = ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"].ToString();
+            }
+            else
+            {
+                ListViewPage.current.LoginContent = ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"].ToString();
+            }
+            
+
 
         }
 
