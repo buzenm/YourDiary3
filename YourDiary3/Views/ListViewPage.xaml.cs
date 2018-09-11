@@ -489,6 +489,7 @@ namespace YourDiary3.Views
                 await Functions.AndDatabaseAsync();
                 MainPage.current.WaitProgressTextBlock.Text = "保存到OneDrive";
                 await Functions.SaveToOnedrive();
+                await Functions.LoadFromDatabase();
             }
             catch(Exception ex)
             {
