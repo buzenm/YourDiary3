@@ -405,16 +405,22 @@ namespace YourDiary3.Views
             //FlyoutFrame.Navigate(typeof(BlankPage));
         }
 
-        private void LoginAppBarButton_Click(object sender, RoutedEventArgs e)
+        private async void LoginAppBarButton_Click(object sender, RoutedEventArgs e)
         {
-
+            if ((bool)ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] == false)
+            {
+                await OneDriveService.Instance.LoginAsync();
+                ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] = true;
+                LoginAppBarButton.Content = "注销";
+            }
+            else
+            {
+                await OneDriveService.Instance.LogoutAsync();
+                ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] = true;
+                LoginAppBarButton.Content = "登陆";
+            }
         }
-
-        private void ZhuXiaoAppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
+        
         private void SettingAppBarButton_Click(object sender, RoutedEventArgs e)
         {
 
@@ -432,6 +438,7 @@ namespace YourDiary3.Views
                 {
                     await OneDriveService.Instance.LoginAsync();
                     ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] = true;
+                    LoginAppBarButton.Content = "注销";
                 }
 
                 await Functions.SaveToOnedrive();

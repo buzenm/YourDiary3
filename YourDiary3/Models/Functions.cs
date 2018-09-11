@@ -124,5 +124,10 @@ namespace YourDiary3.Models
             }
             
         }
+
+        public async static Task AndDatabase()
+        {
+
+        }
     }
 }

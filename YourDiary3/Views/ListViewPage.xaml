@@ -195,7 +195,7 @@
             <CommandBar.SecondaryCommands>
                 
                 <AppBarButton  Label="登录" Name="LoginAppBarButton" Click="LoginAppBarButton_Click"></AppBarButton>
-                <AppBarButton Label="注销" Name="ZhuXiaoAppBarButton" Click="ZhuXiaoAppBarButton_Click"></AppBarButton>
+                <!--<AppBarButton Label="注销" Name="ZhuXiaoAppBarButton" Click="ZhuXiaoAppBarButton_Click"></AppBarButton>-->
                 <AppBarButton  Label="设置" Name="SettingAppBarButton" Click="SettingAppBarButton_Click"></AppBarButton>
             </CommandBar.SecondaryCommands>
             
