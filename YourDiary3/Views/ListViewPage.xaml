@@ -10,7 +10,11 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
-
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="ListviewItemStyle.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
     </Page.Resources>
     
     
@@ -27,6 +31,7 @@
                           ItemClick="BeiWangLuListView_ItemClick" 
                           IsItemClickEnabled="True" 
                           IsRightTapEnabled="True" 
+                          ItemContainerStyle="{StaticResource MyListviewStyle}"
                           
                           RightTapped="BeiWangLuListView_RightTapped">
                     <ListView.Resources>
@@ -57,7 +62,8 @@
             </PivotItem>
             <PivotItem Header="日记" Name="DiaryPivotItem">
                 <ListView Name="DiaryListView" ItemsSource="{x:Bind diaries,Mode=TwoWay}" 
-                          x:FieldModifier="Public"
+                          x:FieldModifier="Public" 
+                          
                           IsItemClickEnabled="True" ItemClick="DiaryListView_ItemClick" 
                           IsRightTapEnabled="True" 
                           RightTapped="DiaryListView_RightTapped"
