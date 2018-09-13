@@ -93,17 +93,24 @@ namespace YourDiary3.Models
         public async static Task LoadFromOnedrive()
         {
             var oneDriveAppFolder = await OneDriveService.Instance.AppRootFolderAsync();
-
-            // Downloading files
-            // Download a file and save the content in a local file
-            // Convert the storage item to a storage file
-            var oneDriveFile = await oneDriveAppFolder.GetFileAsync("YourDiary.db3");
-            
-            using (var remoteStream = (await oneDriveFile.StorageFilePlatformService.OpenAsync()) as IRandomAccessStream)
+            try
             {
-                // Use a helper method to open local filestream and write to it 
-                await SaveToLocalFolder(remoteStream, oneDriveFile.Name);
+                // Downloading files
+                // Download a file and save the content in a local file
+                // Convert the storage item to a storage file
+                var oneDriveFile = await oneDriveAppFolder.GetFileAsync("YourDiary.db3");
+
+                using (var remoteStream = (await oneDriveFile.StorageFilePlatformService.OpenAsync()) as IRandomAccessStream)
+                {
+                    // Use a helper method to open local filestream and write to it 
+                    await SaveToLocalFolder(remoteStream, oneDriveFile.Name);
+                }
+                await AndDatabaseAsync();
             }
+            catch { }
+            
+
+            
 
         }
 

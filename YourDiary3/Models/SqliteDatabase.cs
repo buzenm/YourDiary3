@@ -57,7 +57,7 @@ namespace YourDiary3.Models
                 foreach (var item in diaries)
                 {
                     insertCommand.CommandText = "INSERT INTO " + TableName +
-                    " VALUES (NULL,'" + item.Date + "','" + item.Weather + "','" +
+                    "(CSY_DATE,CSY_WEATHER,CSY_CONTENT) VALUES ('" + item.Date + "','" + item.Weather + "','" +
                     item.Content + "')";
                     insertCommand.ExecuteReader();
                 }

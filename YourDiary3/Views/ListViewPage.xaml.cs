@@ -486,7 +486,7 @@ namespace YourDiary3.Views
                 MainPage.current.WaitProgressTextBlock.Text = "连接到OneDrive";
                 await Functions.LoadFromOnedrive();
                 MainPage.current.WaitProgressTextBlock.Text = "合并数据";
-                await Functions.AndDatabaseAsync();
+                //await Functions.AndDatabaseAsync();
                 MainPage.current.WaitProgressTextBlock.Text = "保存到OneDrive";
                 await Functions.SaveToOnedrive();
                 diaries = SqliteDatabase.LoadFromDatabase(DBName, DiaryTableName);
