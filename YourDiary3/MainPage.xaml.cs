@@ -48,6 +48,7 @@ namespace YourDiary3
             current = this;
             RightFrame.Navigate(typeof(RemindContentPage), "1");
 
+
         }
 
         protected override void OnNavigatedTo(NavigationEventArgs e)

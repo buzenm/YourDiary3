@@ -391,7 +391,7 @@ namespace YourDiary3.Views
                 {
                     reminds.Remove(item);
                     string conn = "Filename=" + ApplicationData.Current.LocalFolder.Path + "\\YourDiary.db3";
-                    string sql = "delete from " + RemindTableName + " where CSY_DATE='" + item.Date+"'";
+                    string sql = "delete from " + RemindTableName + " where CSY_DATE='" + item.Date + "'";
                     SqliteDatabase.UpdateData(conn, sql);
                     break;
                 }
