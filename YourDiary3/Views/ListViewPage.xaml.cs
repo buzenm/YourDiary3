@@ -32,8 +32,8 @@ namespace YourDiary3.Views
     /// </summary>
     public sealed partial class ListViewPage : Page, INotifyPropertyChanged
     {
-        private Remind deleteRemind = new Remind();
-        private Diary deleteDiary = new Diary();
+        public Remind deleteRemind = new Remind();
+        public Diary deleteDiary = new Diary();
         //public string loginContent = "";
 
         private string loginContent;
@@ -60,7 +60,7 @@ namespace YourDiary3.Views
         public ObservableCollection<Diary> diaries = new ObservableCollection<Diary>();
 
         public event PropertyChangedEventHandler PropertyChanged;
-        protected void OnPropertyChanged(string name)
+        void OnPropertyChanged(string name)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
@@ -357,7 +357,7 @@ namespace YourDiary3.Views
             diary.Date = DiaryContentPage.current.TitleTextBlock.Text;
             diary.Content = DiaryContentPage.current.ContentTextBox.Text;
             diary.Weather = DiaryContentPage.current.WeatherComboBox.SelectionBoxItem.ToString();
-            current.diaries.Add(diary);
+            diaries.Add(diary);
 
             SqliteDatabase.InsertData(diary, DBName, DiaryTableName);
         }
@@ -433,6 +433,9 @@ namespace YourDiary3.Views
                     ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] = true;
                     ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"] = "注销";
                     LoginContent = ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"].ToString();
+                    MainPage.current.WaitProgressTextBlock.Text = "连接到OneDrive";
+                    MainPage.current.WaitProgressTextBlock.Text = "合并数据";
+                    await Functions.LoadFromOnedrive();
                 }
                 catch { }
                 
@@ -468,7 +471,7 @@ namespace YourDiary3.Views
 
             try
             {
-                ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] = false;
+                //ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] = false;
 
                 if ((bool)ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] == false)
                 {
@@ -478,15 +481,18 @@ namespace YourDiary3.Views
                     ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] = true;
                     ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"] = "注销";
                     LoginContent = ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"].ToString();
+                    MainPage.current.WaitProgressTextBlock.Text = "连接到OneDrive";
+                    MainPage.current.WaitProgressTextBlock.Text = "合并数据";
+                    await Functions.LoadFromOnedrive();
+                    
                 }
-                MainPage.current.WaitProgressTextBlock.Text = "连接到OneDrive";
-                await Functions.LoadFromOnedrive();
-                MainPage.current.WaitProgressTextBlock.Text = "合并数据";
+                
                 //await Functions.AndDatabaseAsync();
                 MainPage.current.WaitProgressTextBlock.Text = "保存到OneDrive";
                 await Functions.SaveToOnedrive();
                 diaries = SqliteDatabase.LoadFromDatabase(DBName, DiaryTableName);
                 reminds = SqliteDatabase.LoadFromDatabase2(DBName, RemindTableName);
+                this.Bindings.Update();
             }
             catch(Exception ex)
             {
