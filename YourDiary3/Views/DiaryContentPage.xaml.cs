@@ -7,6 +7,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Core;
 using Windows.UI.Popups;
 using Windows.UI.Xaml;
@@ -86,8 +87,11 @@ namespace YourDiary3.Views
             }
             else if (e.Parameter.GetType() == typeof(string))
             {
+
                 TitleTextBlock.Text = DateTime.Now.ToLongDateString();
                 SaveAppBarButton.IsEnabled = false;
+                ContentTextBox.IsEnabled = false;
+                //ContentTextBox.Background = new AcrylicBrush();
                 MainPage.current.RightFrame.BackStack.Clear();
                 Functions.SetCanvasZ("10");
             }
@@ -104,6 +108,7 @@ namespace YourDiary3.Views
                 MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), "1");
                 MainPage.current.RightFrame.BackStack.Clear();
                 ListViewPage.current.DiaryListView.SelectedIndex = -1;
+                ListViewPage.current.BeiWangLuListView.SelectedIndex = -1;
                 Functions.SetCanvasZ("10");
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                 SystemNavigationManager.GetForCurrentView().BackRequested -= DiaryContentPage_BackRequested;
