@@ -189,7 +189,7 @@ namespace YourDiary3.Models
                             SqliteDatabase.db, RemindTableName);
                     }
                 }
-                dataReader2.Close();
+                //dataReader2.Close();
                 db1.Close();
                 
             }

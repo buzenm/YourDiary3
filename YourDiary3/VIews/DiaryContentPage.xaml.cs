@@ -165,8 +165,8 @@ namespace YourDiary3.Views
                     item.Content = ContentTextBox.Text;
                     string sql = "UPDATE " + DiaryTableName + " SET CSY_CONTENT='" + item.Content + "',CSY_WEATHER='" +
                         item.Weather + "' WHERE CSY_DATE='" + item.Date + "'";
-                    string conn = "Filename=" + ApplicationData.Current.LocalFolder.Path + "\\" + DBName;
-                    SqliteDatabase.UpdateData(conn, sql);
+                    
+                    SqliteDatabase.UpdateData(sql);
                     MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), "1");
                     MainPage.current.RightFrame.BackStack.Clear();
                     ListViewPage.current.DiaryListView.SelectedIndex = -1;

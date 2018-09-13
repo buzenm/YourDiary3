@@ -117,8 +117,8 @@ namespace YourDiary3.Views
 
                     item.Content = ContentTextBox.Text;
                     string sql = "UPDATE " + RemindTableName + " SET CSY_CONTENT='" + item.Content + "' WHERE CSY_DATE='" + item.Date + "'";
-                    string conn = "Filename=" + ApplicationData.Current.LocalFolder.Path + "\\" + DBName;
-                    SqliteDatabase.UpdateData(conn, sql);
+                    
+                    SqliteDatabase.UpdateData(sql);
                     //MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), "1");
                     MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), 1);
                     MainPage.current.RightFrame.BackStack.Clear();

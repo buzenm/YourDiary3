@@ -153,7 +153,7 @@ namespace YourDiary3.Models
 
         }
 
-        public static void UpdateData(string DBName,string sql)
+        public static void UpdateData(string sql)
         {
             SqliteCommand comm = new SqliteCommand(sql, db);
             comm.ExecuteReader();

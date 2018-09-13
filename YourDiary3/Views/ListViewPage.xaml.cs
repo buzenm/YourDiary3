@@ -207,8 +207,8 @@ namespace YourDiary3.Views
                 {
                     item.Content = RemindContentPage.current.ContentTextBox.Text;
                     string sql = "UPDATE " + RemindTableName + " SET CSY_CONTENT='" + item.Content + "' WHERE CSY_DATE='" + item.Date + "'";
-                    string conn = "Filename=" + ApplicationData.Current.LocalFolder.Path + "\\" + DBName;
-                    SqliteDatabase.UpdateData(conn, sql);
+                    
+                    SqliteDatabase.UpdateData(sql);
                     MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), "1");
                     return;
 
@@ -348,8 +348,8 @@ namespace YourDiary3.Views
                     item.Content = DiaryContentPage.current.ContentTextBox.Text;
                     string sql = "UPDATE " + DiaryTableName + " SET CSY_CONTENT='" + item.Content + "',CSY_WEATHER='" +
                         item.Weather + "' WHERE CSY_DATE='" + item.Date + "'";
-                    string conn = "Filename=" + ApplicationData.Current.LocalFolder.Path + "\\" + DBName;
-                    SqliteDatabase.UpdateData(conn, sql);
+                    
+                    SqliteDatabase.UpdateData(sql);
                     return;
                 }
             }
@@ -390,9 +390,9 @@ namespace YourDiary3.Views
                 if (deleteRemind.Date == item.Date)
                 {
                     reminds.Remove(item);
-                    string conn = "Filename=" + ApplicationData.Current.LocalFolder.Path + "\\YourDiary.db3";
+                    
                     string sql = "delete from " + RemindTableName + " where CSY_DATE='" + item.Date + "'";
-                    SqliteDatabase.UpdateData(conn, sql);
+                    SqliteDatabase.UpdateData(sql);
                     break;
                 }
             }
@@ -405,9 +405,9 @@ namespace YourDiary3.Views
                 if (deleteDiary.Date == item.Date)
                 {
                     diaries.Remove(item);
-                    string conn = "Filename=" + ApplicationData.Current.LocalFolder.Path + "\\YourDiary.db3";
+                    
                     string sql = "delete from " + DiaryTableName + " where CSY_DATE='" + item.Date+"'";
-                    SqliteDatabase.UpdateData(conn, sql);
+                    SqliteDatabase.UpdateData(sql);
                     break;
                 }
             }
