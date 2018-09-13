@@ -443,18 +443,33 @@ namespace YourDiary3.Views
             
             if ((bool)ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] == false)
             {
-                await OneDriveService.Instance.LoginAsync();
-                ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] = true;
-                ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"] = "注销";
-                LoginContent = ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"].ToString();
+                MainPage.current.WaitProgressRing.IsActive = true;
+                MainPage.current.WaitProgressTextBlock.Text = "正在登陆";
+                MainPage.current.WaitProgressTextBlock.Visibility = Visibility.Visible;
+                try
+                {
+                    await OneDriveService.Instance.LoginAsync();
+                    ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] = true;
+                    ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"] = "注销";
+                    LoginContent = ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"].ToString();
+                }
+                catch { }
+                
+                MainPage.current.WaitProgressRing.IsActive = false;
+                MainPage.current.WaitProgressTextBlock.Visibility = Visibility.Collapsed;
             }
             else
             {
+                MainPage.current.WaitProgressRing.IsActive = true;
+                MainPage.current.WaitProgressTextBlock.Text = "正在注销";
+                MainPage.current.WaitProgressTextBlock.Visibility = Visibility.Visible;
                 var folder = await OneDriveService.Instance.AppRootFolderAsync();
                 await OneDriveService.Instance.LogoutAsync();
                 ApplicationData.Current.LocalSettings.Containers["signStateContainer"].Values["signState"] = false;
                 ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"] = "登陆";
                 LoginContent = ApplicationData.Current.LocalSettings.Containers["signStateContent"].Values["signState"].ToString();
+                MainPage.current.WaitProgressRing.IsActive = false;
+                MainPage.current.WaitProgressTextBlock.Visibility = Visibility.Collapsed;
             }
         }
         
@@ -494,16 +509,22 @@ namespace YourDiary3.Views
             }
             catch(Exception ex)
             {
-                MainPage.current.WaitProgressRing.IsActive = false;
-                MainPage.current.WaitProgressTextBlock.Visibility = Visibility.Collapsed;
-                ContentDialog dialog = new ContentDialog()
+                if(ex.Message!= "User canceled authentication")
                 {
-                    Title = "YourDiary",
-                    Content = ex.Message,
-                    IsSecondaryButtonEnabled = true,
-                    SecondaryButtonText = "关闭"
-                };
-                await dialog.ShowAsync();
+                    MainPage.current.WaitProgressRing.IsActive = false;
+                    MainPage.current.WaitProgressTextBlock.Visibility = Visibility.Collapsed;
+                    ContentDialog dialog = new ContentDialog()
+                    {
+                        Title = "YourDiary",
+                        Content = ex.Message,
+                        IsSecondaryButtonEnabled = true,
+                        SecondaryButtonText = "关闭"
+                    };
+                    await dialog.ShowAsync();
+                }
+
+                    
+                
             }
 
 
