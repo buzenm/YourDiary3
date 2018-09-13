@@ -27,6 +27,7 @@
                           ItemClick="BeiWangLuListView_ItemClick" 
                           IsItemClickEnabled="True" 
                           IsRightTapEnabled="True" 
+                          
                           RightTapped="BeiWangLuListView_RightTapped">
                     <ListView.Resources>
                         <MenuFlyout x:Name="RemindMenuFlyout">
