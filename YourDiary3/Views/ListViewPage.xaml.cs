@@ -489,7 +489,8 @@ namespace YourDiary3.Views
                 await Functions.AndDatabaseAsync();
                 MainPage.current.WaitProgressTextBlock.Text = "保存到OneDrive";
                 await Functions.SaveToOnedrive();
-                await Functions.LoadFromDatabase();
+                diaries = SqliteDatabase.LoadFromDatabase(DBName, DiaryTableName);
+                reminds = SqliteDatabase.LoadFromDatabase2(DBName, RemindTableName);
             }
             catch(Exception ex)
             {

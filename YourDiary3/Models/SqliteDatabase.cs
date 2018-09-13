@@ -75,11 +75,22 @@ namespace YourDiary3.Models
                 insertCommand.Connection = db;
                 //diary.Date = DateTime.ParseExact(diary.Date.ToString(), "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
                 insertCommand.CommandText = "INSERT INTO " + TableName +
-                    " VALUES (NULL,'" + diary.Date + "','" + diary.Weather + "','" +
-                    diary.Content + "')";
+                "(CSY_DATE,CSY_WEATHER,CSY_CONTENT) VALUES ('" + diary.Date + "','" + diary.Weather + "','" +
+                diary.Content + "')";
                 insertCommand.ExecuteReader();
                 db.Close();
             }
+        }
+
+        public static void InsertData(Diary diary, SqliteConnection db, string TableName)
+        {
+            SqliteCommand insertCommand = new SqliteCommand();
+            insertCommand.Connection = db;
+            //diary.Date = DateTime.ParseExact(diary.Date.ToString(), "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
+            insertCommand.CommandText = "INSERT INTO " + TableName +
+                "(CSY_DATE,CSY_WEATHER,CSY_CONTENT) VALUES ('" + diary.Date + "','" + diary.Weather + "','" +
+                diary.Content + "')";
+            insertCommand.ExecuteReader();
         }
 
         public static void InsertData(Remind remind, string DBName, string TableName)
@@ -91,11 +102,22 @@ namespace YourDiary3.Models
                 insertCommand.Connection = db;
                 //diary.Date = DateTime.ParseExact(diary.Date.ToString(), "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
                 insertCommand.CommandText = "INSERT INTO " + TableName +
-                    " VALUES (NULL,'" + remind.Date + "','"+
-                    remind.Content + "')";
+                "(CSY_DATE,CSY_CONTENT) VALUES ('" + remind.Date + "','" +
+                remind.Content + "')";
                 insertCommand.ExecuteReader();
                 db.Close();
             }
+        }
+
+        public static void InsertData(Remind remind, SqliteConnection db, string TableName)
+        {
+            SqliteCommand insertCommand = new SqliteCommand();
+            insertCommand.Connection = db;
+            //diary.Date = DateTime.ParseExact(diary.Date.ToString(), "yyyyMMdd", System.Globalization.CultureInfo.CurrentCulture);
+            insertCommand.CommandText = "INSERT INTO " + TableName +
+                "(CSY_DATE,CSY_CONTENT) VALUES ('" + remind.Date + "','" +
+                remind.Content + "')";
+            insertCommand.ExecuteReader();
         }
 
         public static ObservableCollection<Diary> LoadFromDatabase(string DBName,string TableName)
