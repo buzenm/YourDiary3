@@ -10,76 +10,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
-        <Style x:Key="RemindTextBlock" TargetType="TextBlock">
-            <Setter Property="FontSize" Value="18"/>
-        </Style>
-        <!--<ResourceDictionary>
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Dictionary1.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>-->
-        <ResourceDictionary x:Key="ListviewStyleDictionary">
-            <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="ListviewItemStyle.xaml"/>
-            </ResourceDictionary.MergedDictionaries>
-        </ResourceDictionary>
-        <!--<Style x:Name="MyListViewItemSelectedStyle" TargetType="ListViewItem">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListViewItem">
-                        <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
-                            <ContentPresenter
-                                Content="{TemplateBinding Content}"
-                                Margin="{TemplateBinding Padding}" />
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>-->
-        <!--<Style x:Name="MyListViewItemSelectedStyle" TargetType="ListViewItem">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListViewItem">
-                        <Grid Background="{TemplateBinding Background}">
-                            <VisualStateManager.VisualStateGroups>
-                                <VisualStateGroup>
-                                    
-        
-                                    <VisualState x:Name="Normal" />
-                                    
-                                    <VisualState x:Name="PointerOver">
-                                        <Storyboard>
-                                            <ObjectAnimationUsingKeyFrames 
-                        Storyboard.TargetName="ContentBackground"
-                        Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="Red" />
-                                            </ObjectAnimationUsingKeyFrames>
-                                        </Storyboard>
-                                    </VisualState>
-                                </VisualStateGroup>
-                            </VisualStateManager.VisualStateGroups>
-                            <Grid x:Name="ContentBackground">
-                                <ContentPresenter
-                  Content="{TemplateBinding Content}"
-                  Margin="{TemplateBinding Padding}" />
-                            </Grid>
-                        </Grid>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>-->
 
-        <Style x:Key="MyListViewItemSelectedStyle" TargetType="ListViewItem" BasedOn="{StaticResource ListViewItemRevealStyle}">
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="ListViewItem" >
-                        <ListViewItemPresenter 
-                            
-                        />
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
     </Page.Resources>
     
     

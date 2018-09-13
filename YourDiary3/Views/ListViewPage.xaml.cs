@@ -413,26 +413,7 @@ namespace YourDiary3.Views
             }
         }
 
-        private void MoreButton_Click(object sender, RoutedEventArgs e)
-        {
-            //if (FlyoutStackPanel.Visibility == Visibility.Collapsed)
-            //    FlyoutStackPanel.Visibility = Visibility.Visible;
-            //else
-            //    FlyoutStackPanel.Visibility = Visibility.Collapsed;
-
-            //if (FlyoutFrame.SourcePageType == null || FlyoutFrame.SourcePageType == typeof(BlankPage))
-            //{
-            //    FlyoutFrame.Navigate(typeof(FlyoutStackPanel));
-            //    Canvas.SetZIndex(FlyoutFrame, 3);
-            //}
-            //else
-            //{
-            //    FlyoutFrame.Navigate(typeof(BlankPage));
-            //    Canvas.SetZIndex(FlyoutFrame, -1);
-            //}
-
-            //FlyoutFrame.Navigate(typeof(BlankPage));
-        }
+        
 
         private async void LoginAppBarButton_Click(object sender, RoutedEventArgs e)
         {
