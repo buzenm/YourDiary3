@@ -80,6 +80,7 @@ namespace YourDiary3.Views
         {
             if (MainPage.current.RightFrame.CanGoBack)
             {
+                e.Handled = true;
                 MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), 1);
                 MainPage.current.RightFrame.BackStack.Clear();
                 ListViewPage.current.BeiWangLuListView.SelectedIndex = -1;
@@ -87,6 +88,7 @@ namespace YourDiary3.Views
                 Functions.SetCanvasZ("10");
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                 SystemNavigationManager.GetForCurrentView().BackRequested -= RemindContentPage_BackRequested;
+                
             }
         }
 

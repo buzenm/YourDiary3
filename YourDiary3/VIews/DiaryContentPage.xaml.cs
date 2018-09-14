@@ -104,6 +104,7 @@ namespace YourDiary3.Views
         {
             if (MainPage.current.RightFrame.CanGoBack)
             {
+                e.Handled = true;
                 //MainPage.current.RightFrame.GoBack();
                 MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), "1");
                 MainPage.current.RightFrame.BackStack.Clear();
@@ -112,6 +113,7 @@ namespace YourDiary3.Views
                 Functions.SetCanvasZ("10");
                 SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
                 SystemNavigationManager.GetForCurrentView().BackRequested -= DiaryContentPage_BackRequested;
+                
 
             }
             
