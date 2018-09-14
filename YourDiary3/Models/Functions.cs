@@ -108,7 +108,10 @@ namespace YourDiary3.Models
                 }
                 await AndDatabaseAsync();
             }
-            catch { }
+            catch(Exception ex)
+            {
+                MainPage.current.WaitProgressTextBlock.Text = "云端没有文件";
+            }
             
 
             
@@ -145,13 +148,13 @@ namespace YourDiary3.Models
 
                 
                 sql = "select * from CSY_DIARY";
-                SqliteCommand comm = new SqliteCommand(sql, SqliteDatabase.db);
+                SqliteCommand comm = new SqliteCommand(sql, db1);
                 SqliteDataReader dataReader = await comm.ExecuteReaderAsync();
                 while (dataReader.Read())
                 {
                     sql = "select * from CSY_DIARY where CSY_DATE='" +
                     dataReader.GetString(1) + "'";
-                    SqliteCommand comm1 = new SqliteCommand(sql, db1);
+                    SqliteCommand comm1 = new SqliteCommand(sql, SqliteDatabase.db);
                     SqliteDataReader dataReader1 = await comm1.ExecuteReaderAsync();
                     if (!dataReader1.HasRows)
                     {
@@ -164,19 +167,19 @@ namespace YourDiary3.Models
 
                         SqliteDatabase.InsertData(diary,
                             SqliteDatabase.db, DiaryTableName);
-
+                        
 
                     }
                 }
                 //dataReader.Close();
                 sql = "select * from CSY_REMIND";
-                SqliteCommand comm2 = new SqliteCommand(sql, SqliteDatabase.db);
+                SqliteCommand comm2 = new SqliteCommand(sql, db1);
                 SqliteDataReader dataReader2 = await comm2.ExecuteReaderAsync();
                 while (dataReader2.Read())
                 {
                     sql = "select * from CSY_REMIND where CSY_DATE='" +
                     dataReader2.GetString(1) + "'";
-                    SqliteCommand comm1 = new SqliteCommand(sql, db1);
+                    SqliteCommand comm1 = new SqliteCommand(sql, SqliteDatabase.db);
                     SqliteDataReader dataReader1 = await comm1.ExecuteReaderAsync();
                     if (!dataReader1.HasRows)
                     {
