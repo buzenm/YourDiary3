@@ -47,7 +47,7 @@ namespace YourDiary3
             //RightFrame.Navigate(typeof(DiaryContentPage));
             current = this;
             RightFrame.Navigate(typeof(RemindContentPage), "1");
-
+            
 
         }
 

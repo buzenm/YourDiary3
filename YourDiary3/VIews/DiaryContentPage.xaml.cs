@@ -105,19 +105,53 @@ namespace YourDiary3.Views
             if (MainPage.current.RightFrame.CanGoBack)
             {
                 e.Handled = true;
-                //MainPage.current.RightFrame.GoBack();
-                MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), "1");
-                MainPage.current.RightFrame.BackStack.Clear();
-                ListViewPage.current.DiaryListView.SelectedIndex = -1;
-                ListViewPage.current.BeiWangLuListView.SelectedIndex = -1;
-                Functions.SetCanvasZ("10");
-                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
-                SystemNavigationManager.GetForCurrentView().BackRequested -= DiaryContentPage_BackRequested;
-                
 
+                if (current.ContentTextBox.Text != ((Diary)ListViewPage.current.DiaryListView.SelectedItem).Content)
+                {
+                    ContentDialog saveDialog = new ContentDialog()
+                    {
+                        Title = "YourDiary",
+                        Content = "是否保存已编辑的内容",
+                        IsPrimaryButtonEnabled = true,
+                        IsSecondaryButtonEnabled = true,
+                        PrimaryButtonText = "是",
+                        SecondaryButtonText = "否"
+                    };
+                    saveDialog.PrimaryButtonClick += SaveDialog_PrimaryButtonClick;
+                    saveDialog.SecondaryButtonClick += SaveDialog_SecondaryButtonClick;
+                    saveDialog.ShowAsync();
+                    
+                }
+                else
+                {
+                    //MainPage.current.RightFrame.GoBack();
+                    MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), "1");
+                    MainPage.current.RightFrame.BackStack.Clear();
+                    ListViewPage.current.DiaryListView.SelectedIndex = -1;
+                    ListViewPage.current.BeiWangLuListView.SelectedIndex = -1;
+                    Functions.SetCanvasZ("10");
+                    SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+                    SystemNavigationManager.GetForCurrentView().BackRequested -= DiaryContentPage_BackRequested;
+                }
             }
             
 
+        }
+
+        private static void SaveDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), "1");
+            MainPage.current.RightFrame.BackStack.Clear();
+            ListViewPage.current.DiaryListView.SelectedIndex = -1;
+            ListViewPage.current.BeiWangLuListView.SelectedIndex = -1;
+            Functions.SetCanvasZ("10");
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            SystemNavigationManager.GetForCurrentView().BackRequested -= DiaryContentPage_BackRequested;
+        }
+
+        private static void SaveDialog_PrimaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
+        {
+            current.SavetoCollection();
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
