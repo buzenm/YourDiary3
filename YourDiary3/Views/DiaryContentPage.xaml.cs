@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Text.RegularExpressions;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
@@ -72,7 +73,8 @@ namespace YourDiary3.Views
                 SaveAppBarButton.IsEnabled = true;
                 Diary diary = (Diary)e.Parameter;
                 TitleTextBlock.Text = diary.Date;
-                ContentTextBox.Text = diary.Content;
+                //diary.Content= Regex.Replace(diary.Content, "''", "'");
+                ContentTextBox.Text = diary.FixContent;
                 WeatherComboBox.SelectedItem = diary.Weather;
                 if (MainPage.current.RightFrame.BackStackDepth == 1)
                 {
@@ -106,7 +108,7 @@ namespace YourDiary3.Views
             {
                 e.Handled = true;
 
-                if (current.ContentTextBox.Text != ((Diary)ListViewPage.current.DiaryListView.SelectedItem).Content)
+                if (current.ContentTextBox.Text != ((Diary)ListViewPage.current.DiaryListView.SelectedItem)?.FixContent)
                 {
                     ContentDialog saveDialog = new ContentDialog()
                     {
@@ -119,7 +121,16 @@ namespace YourDiary3.Views
                     };
                     saveDialog.PrimaryButtonClick += SaveDialog_PrimaryButtonClick;
                     saveDialog.SecondaryButtonClick += SaveDialog_SecondaryButtonClick;
-                    saveDialog.ShowAsync();
+                    
+                    try
+                    {
+                        saveDialog.ShowAsync().GetResults();
+                    }
+                    catch
+                    {
+
+                    }
+                    
                     
                 }
                 else
@@ -204,6 +215,9 @@ namespace YourDiary3.Views
                 {
                     item.Weather = WeatherComboBox.SelectedItem.ToString();
                     item.Content = ContentTextBox.Text;
+                    item.FixContent = item.Content;
+                    item.Content = Regex.Replace(item.Content, "'", "''");
+                    
                     string sql = "UPDATE " + DiaryTableName + " SET CSY_CONTENT='" + item.Content + "',CSY_WEATHER='" +
                         item.Weather + "' WHERE CSY_DATE='" + item.Date + "'";
                     
@@ -218,6 +232,8 @@ namespace YourDiary3.Views
             Diary diary = new Diary();
             diary.Date = TitleTextBlock.Text;
             diary.Content = ContentTextBox.Text;
+            diary.Content = Regex.Replace(diary.Content, "'", "''");
+            diary.FixContent = diary.Content;
             diary.Weather = WeatherComboBox.SelectionBoxItem.ToString();
             ListViewPage.current.diaries.Add(diary);
 
