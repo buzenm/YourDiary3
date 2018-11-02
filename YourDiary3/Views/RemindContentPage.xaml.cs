@@ -60,7 +60,8 @@ namespace YourDiary3.Views
             else if(e.Parameter.GetType() == typeof(Remind))
             {
                 TitleTextblock.Text = ((Remind)e.Parameter).Date;
-                ContentTextBox.Text = ((Remind)e.Parameter).Content;
+                //((Remind)e.Parameter).Content= Regex.Replace(((Remind)e.Parameter).Content, "''", "'");
+                ContentTextBox.Text = Regex.Replace(((Remind)e.Parameter).Content, "''", "'");
                 if (MainPage.current.RightFrame.BackStackDepth == 1)
                 {
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
@@ -155,7 +156,7 @@ namespace YourDiary3.Views
                 {
 
                     item.Content = ContentTextBox.Text;
-                    Regex.Replace(item.Content, @"[']", @"''");
+                    item.Content = Regex.Replace(item.Content, "'", "''");
                     string sql = "UPDATE " + RemindTableName + " SET CSY_CONTENT='" + item.Content + "' WHERE CSY_DATE='" + item.Date + "'";
                     
                     SqliteDatabase.UpdateData(sql);
@@ -170,7 +171,7 @@ namespace YourDiary3.Views
             Remind remind = new Remind();
             remind.Date = TitleTextblock.Text;
             remind.Content = ContentTextBox.Text;
-            Regex.Replace(remind.Content, @"'", @"''");
+            remind.Content = Regex.Replace(remind.Content, @"'", @"''");
             ListViewPage.current.reminds.Add(remind);
 
             SqliteDatabase.InsertData(remind, DBName, RemindTableName);
