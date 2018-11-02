@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.ServiceModel.Channels;
 using System.Text.RegularExpressions;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
@@ -61,7 +62,7 @@ namespace YourDiary3.Views
             {
                 TitleTextblock.Text = ((Remind)e.Parameter).Date;
                 //((Remind)e.Parameter).Content= Regex.Replace(((Remind)e.Parameter).Content, "''", "'");
-                ContentTextBox.Text = Regex.Replace(((Remind)e.Parameter).Content, "''", "'");
+                ContentTextBox.Text = ((Remind)e.Parameter).FixContent;
                 if (MainPage.current.RightFrame.BackStackDepth == 1)
                 {
                     SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
@@ -84,7 +85,7 @@ namespace YourDiary3.Views
             {
                 e.Handled = true;
 
-                if (current.ContentTextBox.Text != ((Remind)ListViewPage.current.BeiWangLuListView.SelectedItem).Content)
+                if (current.ContentTextBox.Text != ((Remind)ListViewPage.current.BeiWangLuListView.SelectedItem)?.FixContent)
                 {
                     ContentDialog saveDialog = new ContentDialog()
                     {
@@ -97,7 +98,15 @@ namespace YourDiary3.Views
                     };
                     saveDialog.PrimaryButtonClick += SaveDialog_PrimaryButtonClick;
                     saveDialog.SecondaryButtonClick += SaveDialog_SecondaryButtonClick;
-                    saveDialog.ShowAsync();
+                    try
+                    {
+                        saveDialog.ShowAsync();
+                    }
+                    catch
+                    {
+
+                    }
+                    
 
                 }
                 else
@@ -115,6 +124,7 @@ namespace YourDiary3.Views
 
         private static void SaveDialog_SecondaryButtonClick(ContentDialog sender, ContentDialogButtonClickEventArgs args)
         {
+            
             MainPage.current.RightFrame.Navigate(typeof(RemindContentPage), 1);
             MainPage.current.RightFrame.BackStack.Clear();
             ListViewPage.current.BeiWangLuListView.SelectedIndex = -1;
@@ -156,7 +166,9 @@ namespace YourDiary3.Views
                 {
 
                     item.Content = ContentTextBox.Text;
+                    item.FixContent = item.Content;
                     item.Content = Regex.Replace(item.Content, "'", "''");
+                    
                     string sql = "UPDATE " + RemindTableName + " SET CSY_CONTENT='" + item.Content + "' WHERE CSY_DATE='" + item.Date + "'";
                     
                     SqliteDatabase.UpdateData(sql);
@@ -171,7 +183,9 @@ namespace YourDiary3.Views
             Remind remind = new Remind();
             remind.Date = TitleTextblock.Text;
             remind.Content = ContentTextBox.Text;
+            remind.FixContent = remind.Content;
             remind.Content = Regex.Replace(remind.Content, @"'", @"''");
+            
             ListViewPage.current.reminds.Add(remind);
 
             SqliteDatabase.InsertData(remind, DBName, RemindTableName);
@@ -180,7 +194,7 @@ namespace YourDiary3.Views
             ListViewPage.current.BeiWangLuListView.SelectedIndex = -1;
             SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
         }
-
+        
         
     }
 }

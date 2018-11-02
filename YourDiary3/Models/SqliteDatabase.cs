@@ -124,6 +124,7 @@ namespace YourDiary3.Models
                     diary.Date = query.GetString(0);
                     diary.Weather = query.GetString(1);
                     diary.Content = query.GetString(2);
+                    diary.FixContent = diary.Content;
                     diaries.Add(diary);
                 }
             }
@@ -146,6 +147,7 @@ namespace YourDiary3.Models
                     Remind remind = new Remind();
                     remind.Date = query.GetString(0);
                     remind.Content = query.GetString(1);
+                    remind.FixContent = remind.Content;
                     reminds.Add(remind);
                 }
             }

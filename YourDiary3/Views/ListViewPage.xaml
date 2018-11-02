@@ -63,7 +63,7 @@
                                            TextWrapping="Wrap"
                                            Margin="0,0,0,5" 
                                            MaxHeight="70"
-                                           Text="{x:Bind Content,Mode=TwoWay}"></TextBlock>
+                                           Text="{x:Bind FixContent,Mode=TwoWay}"></TextBlock>
                             </StackPanel>
                         </DataTemplate>
                     </ListView.ItemTemplate>
@@ -101,7 +101,7 @@
                                            FontSize="24" 
                                            TextWrapping="Wrap" 
                                            Height="35"
-                                           Text="{x:Bind Content,Mode=TwoWay}" 
+                                           Text="{x:Bind FixContent,Mode=TwoWay}" 
                                            Margin="0,0,0,5"></TextBlock>
                             </StackPanel>
                         </DataTemplate>
