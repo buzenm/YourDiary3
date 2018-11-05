@@ -85,7 +85,7 @@ namespace YourDiary3.Views
             {
                 e.Handled = true;
 
-                if (current.ContentTextBox.Text != ((Remind)ListViewPage.current.BeiWangLuListView.SelectedItem)?.FixContent)
+                if (current.ContentTextBox.Text != ((Remind)ListViewPage.current.BeiWangLuListView.SelectedItem)?.FixContent&& ListViewPage.current.BeiWangLuListView.SelectedItem!=null)
                 {
                     ContentDialog saveDialog = new ContentDialog()
                     {

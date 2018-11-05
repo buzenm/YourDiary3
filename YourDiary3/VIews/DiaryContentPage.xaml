@@ -55,9 +55,9 @@
         </ComboBox>
         <CommandBar Grid.Row="3" 
                     Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}">
-            <AppBarButton Icon="Back" Label="上一篇"></AppBarButton>
+            <AppBarButton Icon="Back" Label="上一篇" ToolTipService.ToolTip="上一篇"></AppBarButton>
             <AppBarButton Icon="Forward" Label="下一篇"></AppBarButton>
-            <AppBarButton Icon="Save" Label="保存" Name="SaveAppBarButton" Click="SaveAppBarButton_Click"></AppBarButton>
+            <AppBarButton Icon="Save" Label="保存" Name="SaveAppBarButton" ToolTipService.ToolTip="保存" Click="SaveAppBarButton_Click"></AppBarButton>
         </CommandBar>
     </Grid>
 </Page>
