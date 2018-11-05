@@ -108,7 +108,7 @@ namespace YourDiary3.Views
             {
                 e.Handled = true;
 
-                if (current.ContentTextBox.Text != ((Diary)ListViewPage.current.DiaryListView.SelectedItem)?.FixContent)
+                if (current.ContentTextBox.Text != ((Diary)ListViewPage.current.DiaryListView.SelectedItem)?.FixContent && ListViewPage.current.DiaryListView.SelectedItem!=null)
                 {
                     ContentDialog saveDialog = new ContentDialog()
                     {
@@ -232,8 +232,8 @@ namespace YourDiary3.Views
             Diary diary = new Diary();
             diary.Date = TitleTextBlock.Text;
             diary.Content = ContentTextBox.Text;
-            diary.Content = Regex.Replace(diary.Content, "'", "''");
             diary.FixContent = diary.Content;
+            diary.Content = Regex.Replace(diary.Content, "'", "''");
             diary.Weather = WeatherComboBox.SelectionBoxItem.ToString();
             ListViewPage.current.diaries.Add(diary);
 
