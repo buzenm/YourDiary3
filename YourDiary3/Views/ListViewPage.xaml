@@ -6,14 +6,19 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:local1="using:YourDiary3.Models"
+    
     mc:Ignorable="d"
+    
+    xmlns:wuxdata="using:Windows.UI.Xaml.Data"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Page.Resources>
+
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="ListviewItemStyle.xaml"/>
             </ResourceDictionary.MergedDictionaries>
+            <CollectionViewSource x:Name="CSV" IsSourceGrouped="True" x:FieldModifier="Public"/>
         </ResourceDictionary>
     </Page.Resources>
 
@@ -45,10 +50,10 @@
                     <!--<ListView.RenderTransform>
                         <RotateTransform Angle="180"></RotateTransform>
                     </ListView.RenderTransform>-->
-                    
+
                     <ListView.ItemTemplate >
                         <DataTemplate x:DataType="local1:Remind">
-                            
+
                             <StackPanel Orientation="Vertical" 
                                         >
                                 <!--<StackPanel.RenderTransform>
@@ -70,43 +75,65 @@
                 </ListView>
             </PivotItem>
             <PivotItem Header="日记" Name="DiaryPivotItem">
-                <ListView Name="DiaryListView" ItemsSource="{x:Bind diaries,Mode=TwoWay}" 
+                <SemanticZoom>
+                    <SemanticZoom.ZoomedInView>
+                        <ListView Name="DiaryListView" ItemsSource="{x:Bind CSV.View,Mode=TwoWay}" 
                           x:FieldModifier="Public" 
                           ItemContainerStyle="{StaticResource MyListviewStyle}"
                           IsItemClickEnabled="True" ItemClick="DiaryListView_ItemClick" 
                           IsRightTapEnabled="True" 
                           RightTapped="DiaryListView_RightTapped"
                           >
-                    <ListView.Resources>
-                        <MenuFlyout x:Name="DiaryMenuFlyout">
-                            <MenuFlyoutItem Name="DiaryMenuFlyoutItem" 
+                            <ListView.Resources>
+                                <MenuFlyout x:Name="DiaryMenuFlyout">
+                                    <MenuFlyoutItem Name="DiaryMenuFlyoutItem" 
                                             Text="删除" 
                                             Click="DiaryMenuFlyoutItem_Click">
-                            </MenuFlyoutItem>
-                        </MenuFlyout>
-                    </ListView.Resources>
-                    <ListView.ItemTemplate >
-                        <DataTemplate x:DataType="local1:Diary">
-                            <StackPanel Orientation="Vertical" >
+                                    </MenuFlyoutItem>
+                                </MenuFlyout>
+                            </ListView.Resources>
+                            <ListView.GroupStyle>
+                                <GroupStyle>
+                                    <GroupStyle.HeaderTemplate>
+                                        <DataTemplate>
+                                            <TextBlock/>
+                                        </DataTemplate>
+                                    </GroupStyle.HeaderTemplate>
+                                </GroupStyle>
+                            </ListView.GroupStyle>
+                            <ListView.ItemTemplate >
+                                <DataTemplate x:DataType="local1:Diary">
+                                    <StackPanel Orientation="Vertical" >
 
-                                <TextBlock Name="DateTextBlock1" 
+                                        <TextBlock Name="DateTextBlock1" 
                                            FontSize="18" 
                                            Text="{x:Bind Date,Mode=TwoWay}"
                                            Margin="0,5,0,2"></TextBlock>
-                                <TextBlock Name="WeatherTextBlock1" 
+                                        <TextBlock Name="WeatherTextBlock1" 
                                            FontSize="16" 
                                            Text="{x:Bind Weather,Mode=TwoWay}"
                                            Margin="0"></TextBlock>
-                                <TextBlock Name="ContentTextBlock1" 
+                                        <TextBlock Name="ContentTextBlock1" 
                                            FontSize="24" 
                                            TextWrapping="Wrap" 
                                            Height="35"
                                            Text="{x:Bind FixContent,Mode=TwoWay}" 
                                            Margin="0,0,0,5"></TextBlock>
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </SemanticZoom.ZoomedInView>
+                    <SemanticZoom.ZoomedOutView>
+                        <ListView ItemsSource="{x:Bind CSV.View.CollectionGroups}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate x:DataType="wuxdata:ICollectionViewGroup">
+                                    <TextBlock Text="{x:Bind Group.(local1:Group.GroupTitle)}"/>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </SemanticZoom.ZoomedOutView>
+                </SemanticZoom>
             </PivotItem>
         </Pivot>
         <!--<Frame HorizontalAlignment="Stretch" VerticalAlignment="Bottom" Name="FlyoutFrame" x:FieldModifier="Public" 
