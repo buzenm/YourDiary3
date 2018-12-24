@@ -177,7 +177,7 @@
                     HorizontalContentAlignment="Left" 
                     HorizontalAlignment="Stretch"></Button>
         </StackPanel>-->
-        <CommandBar Template="{StaticResource AcrylicOverflowCommandBarTemplate}" VerticalAlignment="Bottom" Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" 
+        <CommandBar VerticalAlignment="Bottom" Background="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" 
                     HorizontalAlignment="Stretch" 
                     Grid.Row="1">
             <AppBarButton Icon="Edit" Label="写" Name="AddAppBarButton" Click="AddAppBarButton_Click"></AppBarButton>
