@@ -21,6 +21,7 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using YourDiary3.Models;
+using YourDiary3.ViewModels;
 using YourDiary3.Views;
 
 // https://go.microsoft.com/fwlink/?LinkId=234238 上介绍了“空白页”项模板
@@ -59,6 +60,7 @@ namespace YourDiary3.Views
         public ObservableCollection<Remind> reminds = new ObservableCollection<Remind>();
         public ObservableCollection<Diary> diaries = new ObservableCollection<Diary>();
 
+        public static GroupingViewModel groupingViewModel;
         public event PropertyChangedEventHandler PropertyChanged;
         void OnPropertyChanged(string name)
         {
@@ -69,6 +71,7 @@ namespace YourDiary3.Views
         {
             this.InitializeComponent();
             current = this;
+            
         }
 
         
@@ -79,7 +82,8 @@ namespace YourDiary3.Views
             diaries = SqliteDatabase.LoadFromDatabase(DBName, DiaryTableName);
             reminds = SqliteDatabase.LoadFromDatabase2(DBName, RemindTableName);
             //Canvas.SetZIndex(FlyoutFrame, -1);
-
+            groupingViewModel = new GroupingViewModel(diaries);
+            CSV.Source = groupingViewModel.Groups;
             string AppClientID = "cb8d4295-9fd0-4604-b220-ccfbc7aad516";
             string[] scopes = { MicrosoftGraphScope.FilesReadWriteAppFolder };
             OneDriveService.Instance

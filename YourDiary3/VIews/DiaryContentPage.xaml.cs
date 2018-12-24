@@ -237,6 +237,8 @@ namespace YourDiary3.Views
             diary.Weather = WeatherComboBox.SelectionBoxItem.ToString();
             ListViewPage.current.diaries.Add(diary);
 
+            
+
             SqliteDatabase.InsertData(diary, DBName, DiaryTableName);
             MainPage.current.RightFrame.Navigate(typeof(DiaryContentPage), "1");
             MainPage.current.RightFrame.BackStack.Clear();
